@@ -47,14 +47,35 @@ export default class Login extends Component {
             emailValue: ``
         }
     }
+    emailChange(evt){
+        this.setState({
+            emailValue: evt.target.value
+        });
+    }
+    passwordChange(evt){
+        this.setState({
+            passwordValue: evt.target.value
+        });
+    }
+    handleSubmit(evt){
+        evt.preventDefault();
+        evt.stopPropagation();
+        //proceed login here
+    }
     render(){
         return(
             <WrappedLogin>
                 <LoginTitle>Sign in</LoginTitle>
                 <LoginForm>
-                    <LoginInput type='email' placeholder='Your email' />
-                    <LoginInput type='password' placeholder='Your password'/>
-                    <LoginInput type='submit' value='Login'/>
+                    <LoginInput type='email' placeholder='Your email' value={this.state.emailValue} onChange={(evt) => {
+                        this.emailChange(evt);
+                    }} />
+                    <LoginInput type='password' placeholder='Your password' value={this.state.passwordValue} onChange={(evt) => {
+                        this.passwordChange(evt);
+                    }}/>
+                    <LoginInput type='submit' value='Login' onClick={(evt) => {
+                        this.handleSubmit(evt);
+                    }}/>
                 </LoginForm>
             </WrappedLogin>
         );
