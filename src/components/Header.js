@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
+import colors from './../constants/colors';
+
+const HeaderTitle = styled.h1`
+    font-size: 1.5em;
+    text-transform: uppercase;
+    color: ${colors.special};
+    border: 2px solid ${colors.special};
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px;
+`;
 
 const WrappedHeader = styled.header`
-    background: red;
+    padding: 50px 0px;
+    background: ${colors.fair};
+    display: flex;
+    justify-content: center;
 `;
 
 export default class Header extends Component {
     render(){
         return(
-            <WrappedHeader>
-                header
+            <WrappedHeader className={this.props.className}>
+                <HeaderTitle>Awesomeness Forum</HeaderTitle>
             </WrappedHeader>
         );
     }

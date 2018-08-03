@@ -3,14 +3,17 @@ import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 
 const FooterTitle = styled.h1`
-    border: 1px solid ${colors.special};
+    border: 1px solid ${colors.grey};
     font-size: 1.3em;
     border-radius: 10px;
-    color: ${colors.special};
+    color: ${colors.grey};
 `;
 const FooterNote = styled.p`
     font-size: 0.9em;
     color: ${colors.grey};
+    border: 1px solid ${colors.grey};
+    border-radius: 10px;
+    padding: 5px;
 `;
 const FooterList = styled.ul`
     list-style-type: none;
@@ -19,7 +22,6 @@ const FooterList = styled.ul`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: 1px solid ${colors.grey};
     border-radius: 10px;
 `;
 const FooterItem = styled.li`
@@ -43,7 +45,7 @@ const WrappedFooter = styled.footer`
 export default class Footer extends Component {
     render(){
         return(
-            <WrappedFooter>
+            <WrappedFooter className={this.props.className}>
                 <FooterTitle>Just rules</FooterTitle>
                 <FooterList>
                     <FooterItem>1. Stay gentle as well</FooterItem>
