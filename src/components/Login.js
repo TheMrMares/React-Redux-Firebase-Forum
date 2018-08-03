@@ -49,6 +49,7 @@ export default class Login extends Component {
     handleSubmit(evt){
         evt.preventDefault();
         evt.stopPropagation();
+        console.log(this.state);
         //proceed login here
     }
     render(){

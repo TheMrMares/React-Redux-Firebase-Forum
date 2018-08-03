@@ -33,7 +33,9 @@ export default class Register extends Component {
             emailValue: '',
             cemailValue: '',
             passwordValue: '',
-            cpasswordValue: ''
+            cpasswordValue: '',
+            firstnameValue: '',
+            surnameValue: ''
         }
     }
     handleChange(evt){
@@ -44,6 +46,12 @@ export default class Register extends Component {
             break;
             case 'regEmailConfirmation':
                 this.setState({cemailValue: evt.target.value});
+            break;
+            case 'regFirstname':
+                this.setState({firstnameValue: evt.target.value});
+            break;
+            case 'regSurname':
+                this.setState({surnameValue: evt.target.value});
             break;
             case 'regPassword':
                 this.setState({passwordValue: evt.target.value});
@@ -58,8 +66,9 @@ export default class Register extends Component {
     handleSubmit(evt){
         evt.preventDefault();
         evt.stopPropagation();
-        console.log();
+        console.log(this.state);
         //proceed register here
+        
     }
     render(){
         return(
@@ -81,7 +90,21 @@ export default class Register extends Component {
                         value={this.state.cemailValue}
                         onChange={this.handleChange.bind(this)}
                     />
-
+                    <RegisterSubtitle>User personal information</RegisterSubtitle>
+                    <input 
+                        type='text' 
+                        id='regFirstname' 
+                        placeholder='Your first name'  
+                        value={this.state.firstnameValue}
+                        onChange={this.handleChange.bind(this)}
+                    />
+                    <input 
+                        type='text' 
+                        id='regSurname' 
+                        placeholder='Your  surname'  
+                        value={this.state.surnameValue}
+                        onChange={this.handleChange.bind(this)}
+                    />
                     <RegisterSubtitle>User password</RegisterSubtitle>
                     <input 
                         type='password' 
