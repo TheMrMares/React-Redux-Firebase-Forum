@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
+import { Redirect } from 'react-router'
+import {auth} from './../firebase/index';
 
 const LoginTitle = styled.h1`
     font-size: 1.3em;
@@ -31,7 +33,8 @@ export default class Login extends Component {
         super()
         this.state = {
             passwordValue: ``,
-            emailValue: ``
+            emailValue: ``,
+            redirect: false
         }
     }
     handleChange(evt){
@@ -51,10 +54,23 @@ export default class Login extends Component {
         evt.stopPropagation();
         console.log(this.state);
         //proceed login here
+        auth.signInWithEmailAndPassword(this.state.emailValue, this.state.passwordValue).then(() => {
+            this.setState({redirect: true})
+        }).catch((error) => {
+            console.log(`CODE: ${error.code}`);
+            console.log(`MESSAGE: ${error.message}`);
+        });
+        
+    }
+    checkRender(){
+        if(this.state.redirect === true) {
+            return <Redirect to="/"/>
+        }
     }
     render(){
         return(
             <WrappedLogin className={this.props.className}>
+                {this.checkRender()}
                 <LoginTitle>Sign in</LoginTitle>
                 <LoginForm>
                     <LoginSubtitle>User email</LoginSubtitle>
