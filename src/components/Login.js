@@ -5,21 +5,18 @@ import colors from './../constants/colors';
 const LoginTitle = styled.h1`
     font-size: 1.3em;
 `;
-const LoginInput = styled.input`
-    margin: 10px;
-    padding: 5px;
-    border-radius: 10px;
-    appearance: none;
+const LoginSubtitle = styled.h2`
+    font-size: 1em;
+    margin: 5px;
 `;
-
 const LoginForm = styled.form`
     border-radius: 10px;
     border: 1px solid ${colors.grey};
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    padding: 10px;
 `;
-
 const WrappedLogin = styled.section`
     background: ${colors.fair};
     display: flex;
@@ -27,16 +24,6 @@ const WrappedLogin = styled.section`
     flex-direction: column;
     align-items: center;
     padding: 40px 0px;
-    ${LoginInput}[type=email], ${LoginInput}[type=password] {
-        border: 1px solid ${colors.grey};
-    }
-    ${LoginInput}[type=submit] {
-        border: none;
-        background: ${colors.special};
-        color: ${colors.fair};
-        text-transform: uppercase;
-        font-weight: bold;
-    }
 `;
 
 export default class Login extends Component {
@@ -47,15 +34,17 @@ export default class Login extends Component {
             emailValue: ``
         }
     }
-    emailChange(evt){
-        this.setState({
-            emailValue: evt.target.value
-        });
-    }
-    passwordChange(evt){
-        this.setState({
-            passwordValue: evt.target.value
-        });
+    handleChange(evt){
+        switch(evt.target.id){
+            case 'logEmail':
+                this.setState({emailValue: evt.target.value});
+            break;
+            case 'logPassword':
+                this.setState({passwordValue: evt.target.value});
+            break;
+            default:
+            break;
+        }
     }
     handleSubmit(evt){
         evt.preventDefault();
@@ -64,18 +53,26 @@ export default class Login extends Component {
     }
     render(){
         return(
-            <WrappedLogin>
+            <WrappedLogin className={this.props.className}>
                 <LoginTitle>Sign in</LoginTitle>
                 <LoginForm>
-                    <LoginInput type='email' placeholder='Your email' value={this.state.emailValue} onChange={(evt) => {
-                        this.emailChange(evt);
-                    }} />
-                    <LoginInput type='password' placeholder='Your password' value={this.state.passwordValue} onChange={(evt) => {
-                        this.passwordChange(evt);
-                    }}/>
-                    <LoginInput type='submit' value='Login' onClick={(evt) => {
-                        this.handleSubmit(evt);
-                    }}/>
+                    <LoginSubtitle>User email</LoginSubtitle>
+                    <input 
+                        type='email' 
+                        id='logEmail'
+                        placeholder='Your email' 
+                        value={this.state.emailValue} 
+                        onChange={this.handleChange.bind(this)}
+                    />
+                    <LoginSubtitle>User password</LoginSubtitle>
+                    <input 
+                        type='password' 
+                        id='logPassword'
+                        placeholder='Your password' 
+                        value={this.state.passwordValue} 
+                        onChange={this.handleChange.bind(this)}
+                    />
+                    <input type='submit' value='Login' onClick={this.handleSubmit.bind(this)}/>
                 </LoginForm>
             </WrappedLogin>
         );
