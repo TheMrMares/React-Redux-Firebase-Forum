@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
+import { Redirect } from 'react-router'
+
+import {auth} from './../firebase/index';
 
 const RegisterTitle = styled.h1`
     font-size: 1.3em;
@@ -35,7 +38,8 @@ export default class Register extends Component {
             passwordValue: '',
             cpasswordValue: '',
             firstnameValue: '',
-            surnameValue: ''
+            surnameValue: '',
+            redirect: false
         }
     }
     handleChange(evt){
@@ -68,11 +72,24 @@ export default class Register extends Component {
         evt.stopPropagation();
         console.log(this.state);
         //proceed register here
+        auth.createUserWithEmailAndPassword(this.state.emailValue, this.state.passwordValue).then(() => {
+            this.setState({redirect: true});
+        }).catch((error) => {
+            console.log(`CODE: ${error.code}`);
+            console.log(`MESSAGE: ${error.message}`);
+        });
         
+        
+    }
+    checkRender(){
+        if(this.state.redirect === true) {
+            return <Redirect to="/"/>
+        }
     }
     render(){
         return(
             <WrappedRegister className={this.props.className}>
+                {this.checkRender()}
                 <RegisterTitle>Create new account</RegisterTitle>
                 <RegisterForm>
                     <RegisterSubtitle>User email</RegisterSubtitle>

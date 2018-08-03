@@ -15,7 +15,8 @@ export default class Land extends Component {
     render(){
         return(
             <WrappedLand>
-                <p>Badly you did not sign in! Go and login!</p>
+                <h1>You are not logged in!</h1>
+                <p>Badly you did not sign in! Go and do it if you want enjoy our forum!</p>
             </WrappedLand>
         );
     }
