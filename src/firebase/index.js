@@ -3,10 +3,10 @@ import 'firebase/auth';
 import 'firebase/database';
 let config = {
     apiKey: "apikey",
-    authDomain: "domain",
+    authDomain: "authdomain",
     databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
-    projectId: "id",
-    storageBucket: "bucketid",
+    projectId: "projectid",
+    storageBucket: "storage",
     messagingSenderId: "<SENDER_ID>",
   };
   
