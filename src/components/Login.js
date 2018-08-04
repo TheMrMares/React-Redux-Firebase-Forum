@@ -3,6 +3,9 @@ import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 import { Redirect } from 'react-router'
 import {auth} from './../firebase/index';
+import { connect } from "react-redux";
+
+import {testIt, LogIn} from './../actions/index';
 
 const LoginTitle = styled.h1`
     font-size: 1.3em;
@@ -28,7 +31,14 @@ const WrappedLogin = styled.section`
     padding: 40px 0px;
 `;
 
-export default class Login extends Component {
+const mapDispatchToProps = dispatch => {
+    return {
+        sendTest: payload => dispatch(testIt(payload)),
+        signIn: payload => dispatch(LogIn(payload))
+    };
+  };
+
+class Login extends Component {
     constructor() {
         super()
         this.state = {
@@ -52,9 +62,9 @@ export default class Login extends Component {
     handleSubmit(evt){
         evt.preventDefault();
         evt.stopPropagation();
-        console.log(this.state);
         //proceed login here
         auth.signInWithEmailAndPassword(this.state.emailValue, this.state.passwordValue).then(() => {
+            this.props.signIn(auth.currentUser);
             this.setState({redirect: true})
         }).catch((error) => {
             console.log(`CODE: ${error.code}`);
@@ -95,3 +105,5 @@ export default class Login extends Component {
         );
     }
 }
+
+export default connect(null, mapDispatchToProps)(Login);

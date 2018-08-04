@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
-
 import {auth} from './../firebase/index';
+import { connect } from "react-redux";
 
 const HomeTitle = styled.h1`
     font-size: 1.5em;
 `;
-
 const WrappedHome = styled.section`
     background: ${colors.fair};
     display: flex;
@@ -17,7 +16,13 @@ const WrappedHome = styled.section`
     padding: 40px 0px;
 `;
 
-export default class Home extends Component {
+const mapStateToProps = state => {
+    return { 
+        auths: state.auths
+    };
+};
+
+class Home extends Component {
     constructor(){
         super()
         
@@ -27,7 +32,10 @@ export default class Home extends Component {
             <WrappedHome>
                 <HomeTitle>Welcome home!</HomeTitle>
                 <p>Hmm</p>
+                {console.log(this.props.auths)}
             </WrappedHome>
         );
     }
 }
+
+export default connect(mapStateToProps)(Home);

@@ -13,8 +13,6 @@ import Land from './Land';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
-//ENV DOESNT WORK
-console.log(process.env.API_KEY);
 
 const StyledHeader = styled(Header)``;
 const StyledFooter = styled(Footer)``;

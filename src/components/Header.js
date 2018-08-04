@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
-
-import {auth} from './../firebase/index';
-
+import UserInfo from './../components/UserInfo';
 import Navigation from './Navigation';
 
 const StyledNavigation = styled(Navigation)`
     width: 100%;
+`;
+const StyledUserInfo = styled(UserInfo)`
+
 `;
 const HeaderTitle = styled.h1`
     font-size: 1.5em;

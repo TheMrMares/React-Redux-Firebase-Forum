@@ -3,5 +3,6 @@ export default {
     dark: `#111`,
     special: `#4286f4`,
     smooth: `#f2f2f2`,
-    grey: `#cecece`
+    grey: `#cecece`,
+    alert: `#f44242`
 }
