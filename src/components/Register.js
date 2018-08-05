@@ -4,6 +4,10 @@ import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 import { Redirect } from 'react-router'
 import {auth} from './../firebase/index';
+import { LogIn } from './../actions/index';
+import { connect } from "react-redux";
+import {firestore} from './../firebase/index';
+
 // # STYLED
 const RegisterTitle = styled.h1`
     font-size: 1.3em;
@@ -21,7 +25,7 @@ const Alert = styled.p`
     flex-wrap: wrap;
     max-width: 300px;
     text-align: center;
-    `;
+`;
 const RegisterForm = styled.form`
     border-radius: 10px;
     border: 1px solid ${colors.grey};
@@ -40,7 +44,7 @@ const WrappedRegister = styled.section`
     padding: 40px 0px;
 `;
 // # COMPONENT
-export default class Register extends Component {
+class Register extends Component {
     constructor(){
         super()
         this.state = {
@@ -94,11 +98,19 @@ export default class Register extends Component {
 
             //proceed register here
             auth.createUserWithEmailAndPassword(this.state.emailValue, this.state.passwordValue).then((data) => {
-                console.log(data.user.uid);
+                this.props.signIn(auth.currentUser);
+                firestore.collection('users').doc(data.user.uid).set({
+                    email: this.state.emailValue,
+                    firstname: this.state.firstnameValue,
+                    surname: this.state.surnameValue,
+                    imageURL: null,
+                    userID: data.user.uid
+                }).catch(function(error) {
+                    console.log(`# DOCUMENT ADD ERROR - Code: ${error.code} Message: ${error.message}`);
+                });
                 this.setState({redirect: true});
             }).catch((error) => {
-                console.log(`CODE: ${error.code}`);
-                console.log(`MESSAGE: ${error.message}`);
+                console.log(`# REGISTER ERROR - Code: ${error.code} Message: ${error.message}`);
             });
 
         } else {
@@ -126,7 +138,7 @@ export default class Register extends Component {
     }
     checkRender(){
         if(this.state.redirect === true) {
-            return <Redirect to="/"/>
+            return <Redirect to="/login"/>
         }
     }
     renderAlert(){
@@ -192,3 +204,11 @@ export default class Register extends Component {
         );
     }
 }
+// # REDUX
+const mapDispatchToProps = dispatch => {
+    return {
+        signIn: payload => dispatch(LogIn(payload))
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Register);

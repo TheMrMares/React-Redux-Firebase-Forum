@@ -11,6 +11,16 @@ import { LogIn } from './../actions/index';
 const LoginTitle = styled.h1`
     font-size: 1.3em;
 `;
+const LoginAlert = styled.p`
+    color: ${colors.alert};
+    font-weight: bold;
+    font-size: 0.9em;
+    margin: 0px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 300px;
+    text-align: center;
+`;
 const LoginSubtitle = styled.h2`
     font-size: 1em;
     margin: 5px;
@@ -38,7 +48,8 @@ class Login extends Component {
         this.state = {
             passwordValue: ``,
             emailValue: ``,
-            redirect: false
+            redirect: false,
+            loginAlert: null
         }
     }
     handleChange(evt){
@@ -61,14 +72,21 @@ class Login extends Component {
             this.props.signIn(auth.currentUser);
             this.setState({redirect: true})
         }).catch((error) => {
-            console.log(`CODE: ${error.code}`);
-            console.log(`MESSAGE: ${error.message}`);
+            this.setState({
+                loginAlert: 'Invalid email or password'
+            });
+            console.log(`# LOGIN ERROR - Code: ${error.code} Message: ${error.message}`);
         });
         
     }
     checkRender(){
         if(this.state.redirect === true) {
             return <Redirect to="/"/>
+        }
+    }
+    renderAlert(){
+        if(this.state.loginAlert != null){
+            return <LoginAlert>{this.state.loginAlert}</LoginAlert>
         }
     }
     render(){
@@ -94,6 +112,7 @@ class Login extends Component {
                         onChange={this.handleChange.bind(this)}
                     />
                     <input type='submit' value='Login' onClick={this.handleSubmit.bind(this)}/>
+                    {this.renderAlert()}
                 </LoginForm>
             </WrappedLogin>
         );
