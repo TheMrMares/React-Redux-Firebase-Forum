@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
-import {auth} from './../firebase/index';
+import {firestore,auth} from './../firebase/index';
 
 // # STYLED
 const InformationHolder = styled.div`
@@ -27,10 +27,14 @@ const Avatar = styled.img`
 const InfoTitle = styled.h1`
     flex: 0 0 100%;
     font-size: 0.8em;
-    margin: 5px;
+    margin: 0px;
 `;
 const Information = styled.p`
     margin: 0px;
+`;
+const Label = styled.h2`
+    color: ${colors.grey};
+    font-size: 0.8em;
 `;
 const WrappedUserInfo = styled.div`
     border: 1px solid red;
@@ -38,19 +42,51 @@ const WrappedUserInfo = styled.div`
     flex-direction: column;
     border-radius: 10px;
     border: 1px solid ${colors.grey};
+    margin-top: 10px;
 `;
 // # COMPONENT
 export default class UserInfo extends Component {
+    constructor(){
+        super();
+        this.state = {
+            queryData: null
+        }
+
+        let user = auth.currentUser;
+        let docRef = firestore.collection('users').doc(user.uid);
+        docRef.get().then((doc) => {
+            if(doc.exists){
+                this.setState({
+                    queryData: doc.data()
+                });
+            }
+        }).catch((error) => {
+            console.log(`# READ ERROR - Code: ${error.code} Message: ${error.message}`);
+        });
+    }
+    renderData(){
+        if(this.state.queryData != null){
+            let data = this.state.queryData;
+            return (
+                <InformationHolder>
+                    <InfoTitle>Logged as</InfoTitle>
+                    <Label>Email:</Label>
+                    <Information>{data.email}</Information>
+                    <Label>Firstname &#38; surname</Label>
+                    <Information>{`${data.firstname} ${data.surname}`}</Information>
+                </InformationHolder>
+            );
+        } else {
+            <Label>Fetching...</Label>
+        }
+    }
     render(){
         return(
             <WrappedUserInfo className={this.props.className}>
-            <AvatarHolder>
-                <Avatar/>
-            </AvatarHolder>
-            <InformationHolder>
-                <InfoTitle>Logged as</InfoTitle>
-                <Information>{this.props.userEmail}</Information>
-            </InformationHolder>
+                <AvatarHolder>
+                    <Avatar/>
+                </AvatarHolder>
+                {this.renderData()}
             </WrappedUserInfo>
         );
     }

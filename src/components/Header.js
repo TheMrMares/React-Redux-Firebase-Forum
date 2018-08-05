@@ -5,6 +5,7 @@ import colors from './../constants/colors';
 import Navigation from './Navigation';
 import UserInfo from './UserInfo';
 import { connect } from "react-redux";
+
 // # STYLED
 const StyledNavigation = styled(Navigation)`
     width: 100%;
@@ -34,8 +35,7 @@ const WrappedHeader = styled.header`
 class Header extends Component {
     renderUserInfo(){
         if(this.props.auths.isAuth === true) {
-            let user = this.props.auths.authedUser;
-            return <StyledUserInfo userEmail={user.email}/>
+            return <StyledUserInfo/>
         }
     }
     render(){
