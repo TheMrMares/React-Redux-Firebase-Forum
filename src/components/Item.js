@@ -1,8 +1,6 @@
 // # IMPORTS
 import React, { Component } from 'react';
-import {
-    Link
-  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 // # STYLED

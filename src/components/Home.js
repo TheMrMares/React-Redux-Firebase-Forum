@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
-import {auth} from './../firebase/index';
 import { connect } from "react-redux";
 
 // # STYLED
@@ -13,7 +12,7 @@ const WrappedHome = styled.section`
     background: ${colors.fair};
     display: flex;
     justify-content: center;
-    flex-direction: columnw;
+    flex-direction: column;
     align-items: center;
     padding: 40px 0px;
 `;
