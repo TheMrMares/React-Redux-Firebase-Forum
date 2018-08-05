@@ -17,6 +17,7 @@ const SignOutButton = styled.button`
     border-radius: 10px;
     font-weight: bolder;
     justify-self: flex-end;
+    margin-left: 20px;
     &:hover{
         color: ${colors.fair};
         background: ${colors.special};
@@ -36,12 +37,17 @@ const WrappedNavigation = styled.ul`
 class Navigation extends Component {
     constructor(){
         super()
+        //showMode
+        // 0 - show logged only
+        // 1 - show not logged only
+        // 2 - don't show
+        // 3 - show everywhere
         this.state = {
             items: [
-                        {name: 'Login', path: '/login'},
-                        {name: 'Register', path: '/register'},
-                        {name: 'Landing', path: '/landing'},
-                        {name: 'Home', path: '/'},
+                        {name: 'Login', path: '/login', showMode: 1},
+                        {name: 'Register', path: '/register', showMode: 1},
+                        {name: 'Landing', path: '/landing', showMode: 2,},
+                        {name: 'Home', path: '/', showMode: 0},
                     ]
         }
     }
@@ -50,8 +56,27 @@ class Navigation extends Component {
             return <SignOutButton onClick={this.handleSignOut.bind(this)}>Sign Out</SignOutButton>
         }
     }
-    renderItem(text, url, key){
-        return <StyledItem text={text} url={url} key={key}/>
+    renderItem(text, url, key, showMode){
+        switch(showMode){
+            case 0:
+                if(auth.currentUser){
+                    return <StyledItem text={text} url={url} key={key}/>;
+                }
+            break;
+            case 1:
+                if(!auth.currentUser){
+                    return <StyledItem text={text} url={url} key={key}/>;
+                }
+            break;
+            case 2:
+                return;
+            break;
+            case 3:
+                return <StyledItem text={text} url={url} key={key}/>
+            break;
+            default:
+            break;
+        }
     }
     handleSignOut(){
         auth.signOut().then(() => {
@@ -65,7 +90,7 @@ class Navigation extends Component {
         return(
             <WrappedNavigation className={this.props.className}>
                     {this.state.items.map((item, index) => {
-                        return this.renderItem(item.name, item.path, index);
+                        return this.renderItem(item.name, item.path, index, item.showMode);
                     })}
                     {this.renderSignOut()}
             </WrappedNavigation>

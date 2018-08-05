@@ -25,6 +25,7 @@ const Alert = styled.p`
     flex-wrap: wrap;
     max-width: 300px;
     text-align: center;
+    justify-content: center;
 `;
 const RegisterForm = styled.form`
     border-radius: 10px;
@@ -33,7 +34,6 @@ const RegisterForm = styled.form`
     flex-direction: column;
     justify-content: flex-start;
     padding: 10px;
-    width: 400px;
 `;
 const WrappedRegister = styled.section`
     background: ${colors.fair};
