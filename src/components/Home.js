@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 import { connect } from "react-redux";
+import {firestore} from './../firebase/index';
 
 // # STYLED
 const HomeTitle = styled.h1`
@@ -18,11 +19,30 @@ const WrappedHome = styled.section`
 `;
 // # COMPONENT
 class Home extends Component {
+    addData(){
+        console.log('xd');
+        firestore.collection('threads').add({
+            title: 'anythinggg'
+        }).then(function(docRef) {
+            console.log("Document written with ID: ", docRef.id);
+        }).catch(function(error) {
+            console.error("Error adding document: ", error);
+        });
+    }
+    getData(){
+        firestore.collection('threads').get().then(snapshot => {
+            snapshot.docs.forEach(doc => {
+                console.log(doc.data().title);
+            });
+        });
+    }
     render(){
         return(
             <WrappedHome>
                 <HomeTitle>Welcome home!</HomeTitle>
                 <p>Hmm</p>
+                <button onClick={this.addData.bind(this)}>Add data</button>
+                {this.getData()}
             </WrappedHome>
         );
     }

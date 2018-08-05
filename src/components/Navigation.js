@@ -68,7 +68,6 @@ class Navigation extends Component {
                         return this.renderItem(item.name, item.path, index);
                     })}
                     {this.renderSignOut()}
-                    {this.props.tests.message}
             </WrappedNavigation>
         );
     }
@@ -76,8 +75,7 @@ class Navigation extends Component {
 // # REDUX
 const mapStateToProps = state => {
     return { 
-        auths: state.auths,
-        tests: state.tests
+        auths: state.auths
     };
 };
 

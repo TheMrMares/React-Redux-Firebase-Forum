@@ -1,9 +1,10 @@
 // # IMPORTS
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import colors from './../constants/colors';
-import UserInfo from './../components/UserInfo';
 import Navigation from './Navigation';
+import UserInfo from './UserInfo';
+import { connect } from "react-redux";
 // # STYLED
 const StyledNavigation = styled(Navigation)`
     width: 100%;
@@ -21,7 +22,6 @@ const HeaderTitle = styled.h1`
     justify-content: center;
     width: auto;
 `;
-
 const WrappedHeader = styled.header`
     padding: 50px 0px 0px 0px;
     background: ${colors.fair};
@@ -31,13 +31,28 @@ const WrappedHeader = styled.header`
     flex-direction: column;
 `;
 // # COMPONENT
-export default class Header extends Component {
+class Header extends Component {
+    renderUserInfo(){
+        if(this.props.auths.isAuth === true) {
+            let user = this.props.auths.authedUser;
+            return <StyledUserInfo userEmail={user.email}/>
+        }
+    }
     render(){
         return(
             <WrappedHeader className={this.props.className}>
                 <HeaderTitle>Awesomeness Forum</HeaderTitle>
+                {this.renderUserInfo()}
                 <StyledNavigation/>
             </WrappedHeader>
         );
     }
 }
+// # REDUX
+const mapStateToProps = state => {
+    return { 
+        auths: state.auths
+    };
+};
+
+export default connect(mapStateToProps, null)(Header);

@@ -12,6 +12,16 @@ const RegisterSubtitle = styled.h2`
     font-size: 1em;
     margin: 5px;
 `;
+const Alert = styled.p`
+    color: ${colors.alert};
+    font-weight: bold;
+    font-size: 0.9em;
+    margin: 0px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 300px;
+    text-align: center;
+    `;
 const RegisterForm = styled.form`
     border-radius: 10px;
     border: 1px solid ${colors.grey};
@@ -19,6 +29,7 @@ const RegisterForm = styled.form`
     flex-direction: column;
     justify-content: flex-start;
     padding: 10px;
+    width: 400px;
 `;
 const WrappedRegister = styled.section`
     background: ${colors.fair};
@@ -39,7 +50,8 @@ export default class Register extends Component {
             cpasswordValue: '',
             firstnameValue: '',
             surnameValue: '',
-            redirect: false
+            redirect: false,
+            registerAlert: null
         }
     }
     handleChange(evt){
@@ -70,20 +82,56 @@ export default class Register extends Component {
     handleSubmit(evt){
         evt.preventDefault();
         evt.stopPropagation();
-        console.log(this.state);
-        //proceed register here
-        auth.createUserWithEmailAndPassword(this.state.emailValue, this.state.passwordValue).then(() => {
-            this.setState({redirect: true});
-        }).catch((error) => {
-            console.log(`CODE: ${error.code}`);
-            console.log(`MESSAGE: ${error.message}`);
-        });
         
+        let emailCond = (this.state.emailValue === this.state.cemailValue);
+        let passCond = (this.state.passwordValue === this.state.cpasswordValue);
+        let firstnameCond = (this.state.firstnameValue.length > 0);
+        let surnameCond = (this.state.surnameValue.length > 0);
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        let validemailCond = (reg.test(this.state.emailValue));
+
+        if(emailCond && passCond && firstnameCond && surnameCond && validemailCond){
+
+            //proceed register here
+            auth.createUserWithEmailAndPassword(this.state.emailValue, this.state.passwordValue).then((data) => {
+                console.log(data.user.uid);
+                this.setState({redirect: true});
+            }).catch((error) => {
+                console.log(`CODE: ${error.code}`);
+                console.log(`MESSAGE: ${error.message}`);
+            });
+
+        } else {
+            let myAlert;
+            if(!emailCond) {
+                myAlert = 'Emails are not the same.';
+            }
+            if(!passCond) {
+                myAlert = 'Passwords are not the same.';
+            }
+            if(!firstnameCond) {
+                myAlert = 'You have to put your first name.';
+            }
+            if(!surnameCond) {
+                myAlert = 'You have to put your surname.';
+            }
+            if(!validemailCond){
+                myAlert = 'Your email is not valid.'
+            }
+            this.setState({
+                registerAlert: myAlert
+            });
+        }
         
     }
     checkRender(){
         if(this.state.redirect === true) {
             return <Redirect to="/"/>
+        }
+    }
+    renderAlert(){
+        if(this.state.registerAlert != null) {
+            return <Alert>{this.state.registerAlert}</Alert>
         }
     }
     render(){
@@ -138,6 +186,7 @@ export default class Register extends Component {
                         onChange={this.handleChange.bind(this)}/>
 
                     <input type='submit' value='Register' onClick={this.handleSubmit.bind(this)}/>
+                    {this.renderAlert()}
                 </RegisterForm>
             </WrappedRegister>
         );

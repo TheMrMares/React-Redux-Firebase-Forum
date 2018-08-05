@@ -60,6 +60,9 @@ injectGlobal`
     color: ${colors.fair};
     text-transform: uppercase;
     font-weight: bold;
+    text-align: center;
+    display: flex; 
+    justify-content: center;
   }
   input[type=email], input[type=password], input[type=text]{
     border: 1px solid ${colors.grey};

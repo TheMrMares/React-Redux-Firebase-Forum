@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import 'firebase/database';
+import 'firebase/firestore';
 let config = {
     apiKey: process.env.REACT_APP_API_KEY,
     authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -13,3 +13,8 @@ let config = {
 firebase.initializeApp(config);
 
 export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+
+firestore.settings({
+  timestampsInSnapshots: true
+});
