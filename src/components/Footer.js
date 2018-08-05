@@ -1,7 +1,8 @@
+// # IMPORTS
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
-
+// # STYLED
 const FooterTitle = styled.h1`
     border: 1px solid ${colors.grey};
     font-size: 1.3em;
@@ -42,6 +43,7 @@ const WrappedFooter = styled.footer`
         padding: 5px 10px;
     }
 `;
+// # COMPONENT
 export default class Footer extends Component {
     render(){
         return(

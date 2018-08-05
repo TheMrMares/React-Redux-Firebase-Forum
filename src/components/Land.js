@@ -1,7 +1,8 @@
+// # IMPORTS
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
-
+// # STYLED
 const WrappedLand = styled.section`
     background: ${colors.fair};
     display: flex;
@@ -10,7 +11,7 @@ const WrappedLand = styled.section`
     align-items: center;
     padding: 40px 0px;
 `;
-
+// # COMPONENT
 export default class Land extends Component {
     render(){
         return(

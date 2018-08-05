@@ -1,12 +1,13 @@
+// # IMPORTS
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 import { Redirect } from 'react-router'
 import {auth} from './../firebase/index';
 import { connect } from "react-redux";
+import { LogIn } from './../actions/index';
 
-import {testIt, LogIn} from './../actions/index';
-
+// # STYLED
 const LoginTitle = styled.h1`
     font-size: 1.3em;
 `;
@@ -30,14 +31,7 @@ const WrappedLogin = styled.section`
     align-items: center;
     padding: 40px 0px;
 `;
-
-const mapDispatchToProps = dispatch => {
-    return {
-        sendTest: payload => dispatch(testIt(payload)),
-        signIn: payload => dispatch(LogIn(payload))
-    };
-  };
-
+// # COMPONENT
 class Login extends Component {
     constructor() {
         super()
@@ -105,5 +99,11 @@ class Login extends Component {
         );
     }
 }
+// # REDUX
+const mapDispatchToProps = dispatch => {
+    return {
+        signIn: payload => dispatch(LogIn(payload))
+    };
+};
 
 export default connect(null, mapDispatchToProps)(Login);

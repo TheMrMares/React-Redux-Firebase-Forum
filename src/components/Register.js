@@ -1,10 +1,10 @@
+// # IMPORTS
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 import { Redirect } from 'react-router'
-
 import {auth} from './../firebase/index';
-
+// # STYLED
 const RegisterTitle = styled.h1`
     font-size: 1.3em;
 `;
@@ -28,7 +28,7 @@ const WrappedRegister = styled.section`
     align-items: center;
     padding: 40px 0px;
 `;
-
+// # COMPONENT
 export default class Register extends Component {
     constructor(){
         super()

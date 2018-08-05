@@ -1,9 +1,10 @@
+// # IMPORTS
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
-
 import {auth} from './../firebase/index';
 
+// # STYLED
 const WrappedUserInfo = styled.div`
     border: 1px solid red;
     display: flex;
@@ -28,7 +29,7 @@ const NormalSpan = styled.span`
 const AlertSpan = styled.span`
     color: ${colors.alert}
 `;
-
+// # COMPONENT
 export default class UserInfo extends Component {
     constructor(){
         super()

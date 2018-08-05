@@ -1,13 +1,14 @@
+// # IMPORTS
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 import Item from './Item';
 import {auth} from './../firebase/index';
 import { connect } from "react-redux";
+import { LogOut } from './../actions/index';
 
-const StyledItem = styled(Item)`
-    
-`;
+// # STYLED
+const StyledItem = styled(Item)``;
 const SignOutButton = styled.button`
     padding: 5px 20px;
     background: none;
@@ -31,13 +32,7 @@ const WrappedNavigation = styled.ul`
     padding: 0px;
     margin: 30px 0px 0px 0px;
 `;
-
-const mapStateToProps = state => {
-    return { 
-        auths: state.auths
-    };
-};
-
+// # COMPONENT
 class Navigation extends Component {
     constructor(){
         super()
@@ -60,7 +55,7 @@ class Navigation extends Component {
     }
     handleSignOut(){
         auth.signOut().then(() => {
-            console.log('Signed out');
+            this.props.signOut();
         }).catch((error) => {
             console.log(`CODE: ${error.code}`);
             console.log(`MESSAGE: ${error.message}`);
@@ -69,13 +64,28 @@ class Navigation extends Component {
     render(){
         return(
             <WrappedNavigation className={this.props.className}>
+                    {console.log('RERENDER')}
                     {this.state.items.map((item, index) => {
                         return this.renderItem(item.name, item.path, index);
                     })}
                     {this.renderSignOut()}
+                    {this.props.tests.message}
             </WrappedNavigation>
         );
     }
 }
+// # REDUX
+const mapStateToProps = state => {
+    return { 
+        auths: state.auths,
+        tests: state.tests
+    };
+};
 
-export default connect(mapStateToProps)(Navigation);
+const mapDispatchToProps = dispatch => {
+    return {
+        signOut: payload => dispatch(LogOut(payload))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navigation);

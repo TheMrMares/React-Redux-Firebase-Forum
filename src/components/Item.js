@@ -1,10 +1,11 @@
+// # IMPORTS
 import React, { Component } from 'react';
 import {
     Link
   } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
-
+// # STYLED
 const StyledLink = styled(Link)`
   padding: 15px 40px;
   text-decoration: none;
@@ -22,7 +23,7 @@ const WrappedItem = styled.li`
   justify-content: center;
   align-items: center;
 `;
-
+// # COMPONENT
 export default class Item extends Component {
     render(){
         return(

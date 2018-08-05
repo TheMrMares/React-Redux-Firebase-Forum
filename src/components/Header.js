@@ -1,15 +1,14 @@
+// # IMPORTS
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 import UserInfo from './../components/UserInfo';
 import Navigation from './Navigation';
-
+// # STYLED
 const StyledNavigation = styled(Navigation)`
     width: 100%;
 `;
-const StyledUserInfo = styled(UserInfo)`
-
-`;
+const StyledUserInfo = styled(UserInfo)``;
 const HeaderTitle = styled.h1`
     font-size: 1.5em;
     text-transform: uppercase;
@@ -31,9 +30,8 @@ const WrappedHeader = styled.header`
     justify-content: flex-end;
     flex-direction: column;
 `;
-
+// # COMPONENT
 export default class Header extends Component {
-
     render(){
         return(
             <WrappedHeader className={this.props.className}>

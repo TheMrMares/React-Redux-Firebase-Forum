@@ -1,3 +1,4 @@
+// # IMPORTS
 import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
@@ -6,7 +7,6 @@ import {
 } from 'react-router-dom';
 import styled, { css, injectGlobal } from 'styled-components';
 import colors from './../constants/colors';
-
 import Header from './Header';
 import Footer from './Footer';
 import Land from './Land';
@@ -14,6 +14,7 @@ import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 
+// # STYLED
 const StyledHeader = styled(Header)``;
 const StyledFooter = styled(Footer)``;
 const StyledLand = styled(Land)``;
@@ -37,7 +38,6 @@ const WrappedApp = styled.div`
     border-top: 1px solid ${colors.smooth}
   }
 `;
-
 injectGlobal`
   html,body {
     margin: 0; padding: 0;
@@ -68,7 +68,7 @@ injectGlobal`
     background: ${colors.fair};
   }
 `;
-
+// # COMPONENT
 class App extends Component {
   render() {
     return (
