@@ -51,7 +51,8 @@ export default class UserInfo extends Component {
         this.state = {
             queryData: null
         }
-
+    }
+    componentDidMount(){
         let user = auth.currentUser;
         let docRef = firestore.collection('users').doc(user.uid);
         docRef.get().then((doc) => {
