@@ -1,10 +1,10 @@
 // # IMPORTS
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import colors from './../constants/colors';
 import { connect } from "react-redux";
 import {firestore} from './../firebase/index';
-
+import { UpdateData } from './../actions/index';
 // # STYLED
 const HomeTitle = styled.h1`
     font-size: 1.5em;
@@ -20,14 +20,15 @@ const WrappedHome = styled.section`
 // # COMPONENT
 class Home extends Component {
     addData(){
-        console.log('xd');
+        /*console.log('xd');
         firestore.collection('threads').add({
             title: 'anythinggg'
         }).then(function(docRef) {
             console.log("Document written with ID: ", docRef.id);
         }).catch(function(error) {
             console.error("Error adding document: ", error);
-        });
+        });*/
+        this.props.sendData({firstname: 'do diabla'});
     }
     getData(){
         firestore.collection('threads').get().then(snapshot => {
@@ -53,5 +54,9 @@ const mapStateToProps = state => {
         auths: state.auths
     };
 };
-
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = dispatch => {
+    return {
+        sendData: payload => dispatch(UpdateData(payload))
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

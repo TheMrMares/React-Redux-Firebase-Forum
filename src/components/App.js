@@ -3,19 +3,22 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import styled, { css, injectGlobal } from 'styled-components';
 import colors from './../constants/colors';
+import {auth} from './../firebase/index';
+import { connect } from "react-redux";
 import Header from './Header';
 import Footer from './Footer';
 import Land from './Land';
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
-import { connect } from "react-redux";
+import Profile from './Profile';
 
 // # STYLED
 const StyledHeader = styled(Header)``;
 const StyledFooter = styled(Footer)``;
 const StyledLand = styled(Land)``;
 const StyledHome = styled(Home)``;
+const StyledProfile = styled(Profile)``;
 const StyledLogin = styled(Login)``;
 const StyledRegister = styled(Register)``;
 
@@ -91,6 +94,7 @@ class App extends Component {
           <StyledHeader/>
             <Route exact path='/landing' component={StyledLand}/>
             <ProtectedRoute exact path='/' component={StyledHome} authenticated={this.props.auths.isAuth}/>
+            <ProtectedRoute exact path='/profile' component={StyledProfile} authenticated={this.props.auths.isAuth}/>
             <Route exact path='/login' component={StyledLogin}/>
             <Route exact path='/register' component={StyledRegister}/>
           <StyledFooter/>

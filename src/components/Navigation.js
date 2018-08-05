@@ -48,6 +48,7 @@ class Navigation extends Component {
                         {name: 'Register', path: '/register', showMode: 1},
                         {name: 'Landing', path: '/landing', showMode: 2,},
                         {name: 'Home', path: '/', showMode: 0},
+                        {name: 'Profile', path: 'profile', showMode: 0}
                     ]
         }
     }

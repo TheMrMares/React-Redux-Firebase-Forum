@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 import { Redirect } from 'react-router'
-import {auth} from './../firebase/index';
+import {auth, firestore} from './../firebase/index';
 import { connect } from "react-redux";
 import { LogIn } from './../actions/index';
 
@@ -69,8 +69,16 @@ class Login extends Component {
         evt.stopPropagation();
         //proceed login here
         auth.signInWithEmailAndPassword(this.state.emailValue, this.state.passwordValue).then(() => {
-            this.props.signIn(auth.currentUser);
-            this.setState({redirect: true})
+            let user = auth.currentUser;
+            let docRef = firestore.collection('users').doc(user.uid);
+            docRef.get().then((doc) => {
+                if(doc.exists){
+                    this.props.signIn({user: auth.currentUser, data: doc.data()});
+                    this.setState({redirect: true})
+                }
+            }).catch((error) => {
+                console.log(`# READ ERROR - Code: ${error.code} Message: ${error.message}`);
+            });
         }).catch((error) => {
             this.setState({
                 loginAlert: 'Invalid email or password'

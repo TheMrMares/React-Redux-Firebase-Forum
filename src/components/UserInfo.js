@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore,auth} from './../firebase/index';
-
+import { connect } from "react-redux";
 // # STYLED
 const InformationHolder = styled.div`
     display: flex;
@@ -45,50 +45,36 @@ const WrappedUserInfo = styled.div`
     margin-top: 10px;
 `;
 // # COMPONENT
-export default class UserInfo extends Component {
+class UserInfo extends Component {
     constructor(){
         super();
         this.state = {
             queryData: null
         }
     }
-    componentDidMount(){
-        let user = auth.currentUser;
-        let docRef = firestore.collection('users').doc(user.uid);
-        docRef.get().then((doc) => {
-            if(doc.exists){
-                this.setState({
-                    queryData: doc.data()
-                });
-            }
-        }).catch((error) => {
-            console.log(`# READ ERROR - Code: ${error.code} Message: ${error.message}`);
-        });
-    }
-    renderData(){
-        if(this.state.queryData != null){
-            let data = this.state.queryData;
-            return (
-                <InformationHolder>
-                    <InfoTitle>Logged as</InfoTitle>
-                    <Label>Email:</Label>
-                    <Information>{data.email}</Information>
-                    <Label>Firstname &#38; surname</Label>
-                    <Information>{`${data.firstname} ${data.surname}`}</Information>
-                </InformationHolder>
-            );
-        } else {
-            <Label>Fetching...</Label>
-        }
-    }
     render(){
         return(
             <WrappedUserInfo className={this.props.className}>
                 <AvatarHolder>
-                    <Avatar/>
+                    <Avatar src={this.props.auths.authedData.imageURL}/>
                 </AvatarHolder>
-                {this.renderData()}
+                <InformationHolder>
+                    <InfoTitle>Logged as</InfoTitle>
+                    <Label>Email:</Label>
+                    <Information>{this.props.auths.authedData.email}</Information>
+                    <Label>Firstname &#38; surname</Label>
+                    <Information>{`${this.props.auths.authedData.firstname} ${this.props.auths.authedData.surname}`}</Information>
+                </InformationHolder>
             </WrappedUserInfo>
         );
     }
 }
+
+// # REDUX
+const mapStateToProps = state => {
+    return { 
+        auths: state.auths
+    };
+};
+
+export default connect(mapStateToProps, null)(UserInfo);
