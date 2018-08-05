@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 import { Redirect } from 'react-router'
 import {auth} from './../firebase/index';
-import { LogIn } from './../actions/index';
+import { LogIn, UpdateData } from './../actions/index';
 import { connect } from "react-redux";
 import {firestore} from './../firebase/index';
 
@@ -48,6 +48,7 @@ class Register extends Component {
     constructor(){
         super()
         this.state = {
+            urlValue: '',
             emailValue: '',
             cemailValue: '',
             passwordValue: '',
@@ -59,8 +60,10 @@ class Register extends Component {
         }
     }
     handleChange(evt){
-        console.log();
         switch(evt.target.id){
+            case 'regUrl':
+                this.setState({urlValue: evt.target.value});
+            break;
             case 'regEmail':
                 this.setState({emailValue: evt.target.value});
             break;
@@ -98,17 +101,30 @@ class Register extends Component {
 
             //proceed register here
             auth.createUserWithEmailAndPassword(this.state.emailValue, this.state.passwordValue).then((data) => {
-                this.props.signIn(auth.currentUser);
+                
                 firestore.collection('users').doc(data.user.uid).set({
                     email: this.state.emailValue,
                     firstname: this.state.firstnameValue,
                     surname: this.state.surnameValue,
-                    imageURL: null,
+                    imageURL: this.state.urlValue,
                     userID: data.user.uid
+                }).then(() => {
+
+                    let docRef = firestore.collection('users').doc(data.user.uid);
+                    docRef.get().then((doc) => {
+                        if(doc.exists){
+                            this.props.signIn({user: auth.currentUser, data: doc.data()});
+                            this.setState({redirect: true})
+                        }
+                    }).catch((error) => {
+                        console.log(`# READ ERROR - Code: ${error.code} Message: ${error.message}`);
+                    });
+                    
+
                 }).catch(function(error) {
                     console.log(`# DOCUMENT ADD ERROR - Code: ${error.code} Message: ${error.message}`);
                 });
-                this.setState({redirect: true});
+                
             }).catch((error) => {
                 console.log(`# REGISTER ERROR - Code: ${error.code} Message: ${error.message}`);
             });
@@ -152,6 +168,14 @@ class Register extends Component {
                 {this.checkRender()}
                 <RegisterTitle>Create new account</RegisterTitle>
                 <RegisterForm>
+                    <RegisterSubtitle>User avatar</RegisterSubtitle>
+                    <input 
+                        type='text' 
+                        id='regUrl' 
+                        placeholder='- OPTIONALLY - avatar URL' 
+                        value={this.state.urlValue} 
+                        onChange={this.handleChange.bind(this)}
+                    />
                     <RegisterSubtitle>User email</RegisterSubtitle>
                     <input 
                         type='email' 
@@ -207,7 +231,8 @@ class Register extends Component {
 // # REDUX
 const mapDispatchToProps = dispatch => {
     return {
-        signIn: payload => dispatch(LogIn(payload))
+        signIn: payload => dispatch(LogIn(payload)),
+        sendData: payload => dispatch(UpdateData(payload))
     };
 };
 

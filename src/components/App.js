@@ -66,6 +66,10 @@ injectGlobal`
     text-align: center;
     display: flex; 
     justify-content: center;
+    padding: 5px 30px;
+    &:hover {
+      box-shadow: 0px 0px 5px 0px ${colors.special};
+    }
   }
   input[type=email], input[type=password], input[type=text]{
     border: 1px solid ${colors.grey};

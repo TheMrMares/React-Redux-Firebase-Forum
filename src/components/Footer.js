@@ -4,15 +4,15 @@ import styled, { css } from 'styled-components';
 import colors from './../constants/colors';
 // # STYLED
 const FooterTitle = styled.h1`
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.alert};
     font-size: 1.3em;
     border-radius: 10px;
-    color: ${colors.grey};
+    color: ${colors.alert};
 `;
 const FooterNote = styled.p`
     font-size: 0.9em;
-    color: ${colors.grey};
-    border: 1px solid ${colors.grey};
+    color: ${colors.alert};
+    border: 1px solid ${colors.alert};
     border-radius: 10px;
     padding: 5px;
 `;

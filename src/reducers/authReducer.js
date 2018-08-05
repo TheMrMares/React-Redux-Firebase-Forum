@@ -7,7 +7,7 @@ const authReducer = (state = [], action) => {
         case LOG_OUT:
             return {isAuth: false, authedUser: null, authedData: null};
         case UPDATE_DATA:
-        return {isAuth: state.isAuth, authedUser: state.authedUser, authedData: action.payload};
+            return {isAuth: state.isAuth, authedUser: state.authedUser, authedData: action.payload};
         break;
         default:
             return state;

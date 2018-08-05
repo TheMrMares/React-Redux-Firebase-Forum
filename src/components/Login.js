@@ -119,7 +119,7 @@ class Login extends Component {
                         value={this.state.passwordValue} 
                         onChange={this.handleChange.bind(this)}
                     />
-                    <input type='submit' value='Login' onClick={this.handleSubmit.bind(this)}/>
+                    <input type='submit' value='Log in' onClick={this.handleSubmit.bind(this)}/>
                     {this.renderAlert()}
                 </LoginForm>
             </WrappedLogin>
