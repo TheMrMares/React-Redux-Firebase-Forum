@@ -64,7 +64,6 @@ class Navigation extends Component {
     render(){
         return(
             <WrappedNavigation className={this.props.className}>
-                    {console.log('RERENDER')}
                     {this.state.items.map((item, index) => {
                         return this.renderItem(item.name, item.path, index);
                     })}

@@ -17,7 +17,6 @@ const WrappedHome = styled.section`
     align-items: center;
     padding: 40px 0px;
 `;
-
 // # COMPONENT
 class Home extends Component {
     render(){
@@ -25,12 +24,10 @@ class Home extends Component {
             <WrappedHome>
                 <HomeTitle>Welcome home!</HomeTitle>
                 <p>Hmm</p>
-                {console.log(this.props.auths)}
             </WrappedHome>
         );
     }
 }
-
 // # REDUX
 const mapStateToProps = state => {
     return { 
