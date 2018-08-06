@@ -5,30 +5,33 @@ import colors from './../constants/colors';
 import { connect } from "react-redux";
 import {firestore} from './../firebase/index';
 import { UpdateData } from './../actions/index';
+import AddThread from './AddThread';
+
 // # STYLED
+const StyledAddThread = styled(AddThread)``;
+const ThreadArea = styled.div`
+    width: 100%;
+    border: 1px solid red;
+    padding: 20px;
+`;
+const HomeSubtitle = styled.h2`
+    font-size: 1.2em;
+    color: ${colors.special};
+`;
 const HomeTitle = styled.h1`
     font-size: 1.5em;
 `;
 const WrappedHome = styled.section`
     background: ${colors.fair};
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
     padding: 40px 0px;
 `;
 // # COMPONENT
 class Home extends Component {
-    addData(){
-        /*console.log('xd');
-        firestore.collection('threads').add({
-            title: 'anythinggg'
-        }).then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-        }).catch(function(error) {
-            console.error("Error adding document: ", error);
-        });*/
-        this.props.sendData({firstname: 'do diabla'});
+    constructor(){
+        super();
+        this.state = {
+            addThreadState: false
+        };
     }
     getData(){
         firestore.collection('threads').get().then(snapshot => {
@@ -37,13 +40,31 @@ class Home extends Component {
             });
         });
     }
+    showAddThread(){
+        this.setState({
+            addThreadState: true
+        })
+    }
+    hideAddThread(){
+        this.setState({
+            addThreadState: false
+        })
+    }
+    renderAddThread(){
+        if(this.state.addThreadState === true){
+            return <StyledAddThread callbackForAddThread={this.hideAddThread.bind(this)}/>;
+        }
+    }
     render(){
         return(
             <WrappedHome>
-                <HomeTitle>Welcome home!</HomeTitle>
-                <p>Hmm</p>
-                <button onClick={this.addData.bind(this)}>Add data</button>
-                {this.getData()}
+                <HomeTitle>Threads</HomeTitle>
+                <ThreadArea>
+                    <HomeSubtitle>Add new thread</HomeSubtitle>
+                    <button onClick={this.showAddThread.bind(this)}>Add</button>
+                    {this.renderAddThread()}
+                    <HomeSubtitle>List of threads</HomeSubtitle>
+                </ThreadArea>
             </WrappedHome>
         );
     }

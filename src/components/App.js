@@ -51,13 +51,17 @@ injectGlobal`
     font-family: Arial, Helvetica, sans-serif;
     transition: 0.15s ease;
   }
-  input {
+  input, textarea, button {
     margin: 10px;
     padding: 5px;
     border-radius: 10px;
     appearance: none;
+    &:focus {
+      outline: none;
+      box-shadow: 0px 0px 3px 0px ${colors.special};
+    }
   }
-  input[type=submit]{
+  input[type=submit], button{
     border: none;
     background: ${colors.special};
     color: ${colors.fair};
@@ -71,7 +75,7 @@ injectGlobal`
       box-shadow: 0px 0px 5px 0px ${colors.special};
     }
   }
-  input[type=email], input[type=password], input[type=text]{
+  input[type=email], input[type=password], input[type=text], textarea{
     border: 1px solid ${colors.grey};
     background: ${colors.fair};
   }
