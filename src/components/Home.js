@@ -4,14 +4,17 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import { connect } from "react-redux";
 import {firestore} from './../firebase/index';
-import { UpdateData } from './../actions/index';
+import { SetData, AddData } from './../actions/index';
 import AddThread from './AddThread';
+import ThreadList from './ThreadList';
+import { isValidTimestamp } from '../../node_modules/@firebase/util';
+import { domainToASCII } from 'url';
 
 // # STYLED
 const StyledAddThread = styled(AddThread)``;
+const StyledThreadList = styled(ThreadList)``;
 const ThreadArea = styled.div`
     width: 100%;
-    border: 1px solid red;
     padding: 20px;
 `;
 const HomeSubtitle = styled.h2`
@@ -30,8 +33,23 @@ class Home extends Component {
     constructor(){
         super();
         this.state = {
-            addThreadState: false
+            addThreadState: false,
+            threads: []
         };
+    }
+    componentDidMount(){
+        firestore.collection('threads').get().then((data) => {
+            let filteredData = data.docs.filter((item) => {
+                if(item.ref.id != 'template'){
+                    return item;
+                }
+            });
+            this.props.setData(filteredData.map((item) => {
+                return item.data();
+            }));
+        }).catch((error) => {
+            console.log(`# SET THREADS ERROR - Code: ${error.code} Message: ${error.message}`);
+        });
     }
     getData(){
         firestore.collection('threads').get().then(snapshot => {
@@ -64,20 +82,17 @@ class Home extends Component {
                     <button onClick={this.showAddThread.bind(this)}>Add</button>
                     {this.renderAddThread()}
                     <HomeSubtitle>List of threads</HomeSubtitle>
+                    <StyledThreadList/>
                 </ThreadArea>
             </WrappedHome>
         );
     }
 }
 // # REDUX
-const mapStateToProps = state => {
-    return { 
-        auths: state.auths
-    };
-};
 const mapDispatchToProps = dispatch => {
     return {
-        sendData: payload => dispatch(UpdateData(payload))
+        setData: payload => dispatch(SetData(payload)),
+        addData: payload => dispatch(AddData(payload))
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Home);

@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
+import { connect } from "react-redux";
+import { SetData, AddData } from './../actions/index';
+import { closeSync } from 'fs';
 // # STYLED
 const Title = styled.input.attrs({
     type: 'text',
@@ -30,11 +33,22 @@ const Cancel = styled.button`
     background: ${colors.alert};
 `;
 const AddForm = styled.form`
+    position: fixed;
+    z-index: 1100;
     background: ${colors.fair};
     width: 80%;
     padding: 20px;
     border-radius: 10px;
     border: 1px solid ${colors.grey};
+`;
+const CloseAdd = styled.div`
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    background: rgba(0,0,0 , 0.8);
 `;
 const Label  = styled.h1`
     font-size: 1em;
@@ -47,19 +61,18 @@ const AddAlert = styled.p`
     text-align: center;
 `;
 const WrappedAddThread = styled.div`
-    border: 1px solid red;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     position: fixed;
-    background: rgba(0,0,0 , 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 `;
 // # COMPONENT
-export default class AddThread extends Component {
+class AddThread extends Component {
     constructor(){
         super();
         this.state = {
@@ -98,8 +111,13 @@ export default class AddThread extends Component {
                 title: this.state.titleValue,
                 text: this.state.textValue,
                 userID: auth.currentUser.uid
-            }).then(() => {
-                this.informParent();
+            }).then((doc) => {
+                firestore.collection('threads').doc(doc.id).get().then((newdoc) => {
+                    this.props.addData(newdoc.data())
+                    this.informParent();
+                }).catch(function(error) {
+                    console.log(`# NEW THREAD STORAGE ERROR - Code: ${error.code} Message: ${error.message}`);
+                });
             })
             .catch(function(error) {
                 console.log(`# ADD THREAD ERROR - Code: ${error.code} Message: ${error.message}`);
@@ -121,6 +139,7 @@ export default class AddThread extends Component {
     render(){
         return(
             <WrappedAddThread>
+                <CloseAdd onClick={this.informParent.bind(this)}/>
                 <AddForm>
                     <Label>Thread title</Label>
                     <Title 
@@ -144,3 +163,10 @@ export default class AddThread extends Component {
         );
     }
 }
+// # REDUX
+const mapDispatchToProps = dispatch => {
+    return {
+        addData: payload => dispatch(AddData(payload))
+    };
+};
+export default connect(null, mapDispatchToProps)(AddThread);

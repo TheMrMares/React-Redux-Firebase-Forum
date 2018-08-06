@@ -8,7 +8,6 @@ const authReducer = (state = [], action) => {
             return {isAuth: false, authedUser: null, authedData: null};
         case UPDATE_DATA:
             return {isAuth: state.isAuth, authedUser: state.authedUser, authedData: action.payload};
-        break;
         default:
             return state;
     }
