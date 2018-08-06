@@ -5,9 +5,24 @@ import colors from './../constants/colors';
 import { connect } from "react-redux";
 import { UpdateData } from './../actions/index';
 import { firestore, auth } from './../firebase/index';
+import avatarThumbURL from './../images/avatar-thumb1.1.png';
 // # STYLED
 const ProfileTitle = styled.h1`
     font-size: 1.5em;
+`;
+const PreviewHolder = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+`;
+const Preview = styled.img`
+    width: 130px;
+    height: 130px
+    border-radius: 100%;
+    border: 1px solid ${colors.grey};
+    margin: auto;
 `;
 const ProfileAlert = styled.p`
     color: ${colors.alert};
@@ -138,12 +153,18 @@ class Profile extends Component {
             return <ProfileAlert>{this.state.personalAlert}</ProfileAlert>
         }
     }
+    replaceImage(evt){
+        evt.target.src = avatarThumbURL;
+    }
     render(){
         return(
             <WrappedProfile>
                 <ProfileTitle>Edit your profile</ProfileTitle>
                 <ProfileSubtitle>Avatar</ProfileSubtitle>
                     <SectionForm>
+                        <PreviewHolder>
+                            <Preview src={this.state.urlValue} onError={this.replaceImage.bind(this)}/>
+                        </PreviewHolder>
                         <ValueTitle>Image URL</ValueTitle>
                         <input 
                             type='text' 

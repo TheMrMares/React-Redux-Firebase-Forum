@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore,auth} from './../firebase/index';
 import { connect } from "react-redux";
+import avatarThumbURL from './../images/avatar-thumb1.1.png';
 // # STYLED
 const InformationHolder = styled.div`
     display: flex;
@@ -52,11 +53,14 @@ class UserInfo extends Component {
             queryData: null
         }
     }
+    replaceImage(evt){
+        evt.target.src = avatarThumbURL;
+    }
     render(){
         return(
             <WrappedUserInfo className={this.props.className}>
                 <AvatarHolder>
-                    <Avatar src={this.props.auths.authedData.imageURL}/>
+                    <Avatar src={this.props.auths.authedData.imageURL} onError={this.replaceImage.bind(this)}/>
                 </AvatarHolder>
                 <InformationHolder>
                     <InfoTitle>Logged as</InfoTitle>
