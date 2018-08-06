@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore} from './../firebase/index';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
+import DetailedThread from './DetailedThread';
 // # STYLED
 const DataShortcut = styled.div`
     flex: 0 0 70%;
@@ -22,8 +23,8 @@ const Shortcut = styled.div`
     padding: 5px;
 `;
 const ShortTitle = styled.h2`
-    margin: 0px;
-    font-size: 1em;
+    margin: 0px 0px 0px 10px;
+    font-size: 0.9em;
 `;
 const ShortAvatar = styled.img`
     border: 1px solid ${colors.grey};
@@ -41,6 +42,8 @@ const Marked = styled.span`
     font-size: 0.8em;
     margin-right: 10px;
 `;
+const StyledDetailed = styled(DetailedThread)``;
+const Real = styled.div``;
 const WrappedThread = styled.div`
     border-radius: 10px;
     border: 1px solid ${colors.grey};
@@ -54,7 +57,8 @@ export default class Thread extends Component {
     constructor(){
         super()
         this.state = {
-            author: null
+            author: null,
+            isDetailed: false
         }
     }
     componentDidMount(){
@@ -74,20 +78,45 @@ export default class Thread extends Component {
             return this.state.author[fieldname];
         }
     }
+    showDetailed(){
+        this.setState({
+            isDetailed: true
+        });
+    }
+    hideDetailed(){
+        this.setState((prevState) => {
+            return {
+                isDetailed: false
+            }
+        });
+    }
+    renderDetailed(){
+        if(this.state.isDetailed === true){
+            return <StyledDetailed 
+                avatarURL={this.getAuthor('imageURL')} 
+                author={`${this.getAuthor('firstname')} ${this.getAuthor('surname')}`} 
+                title={this.props.title} text={this.props.text} 
+                callbackForThread={this.hideDetailed.bind(this)}
+            />;
+        }
+    }
     render(){
         return(
-            <WrappedThread>
-                <Shortcut>
-                    <DataShortcut>
-                        <ShortTitle>
-                            {this.props.title}
-                        </ShortTitle>
-                    </DataShortcut>
-                    <AuthorShortcut>
-                        <ShortAvatar src={this.getAuthor('imageURL')} onError={this.replaceImage.bind(this)}/>
-                        <ShortAuthor><Marked>Author: </Marked>{`${this.getAuthor('firstname')} ${this.getAuthor('surname')}`}</ShortAuthor>
-                    </AuthorShortcut>
-                </Shortcut>
+            <WrappedThread className={this.props.className}>
+                <Real onClick={this.showDetailed.bind(this)}>
+                    <Shortcut>
+                        <DataShortcut>
+                            <ShortTitle>
+                                {this.props.title}
+                            </ShortTitle>
+                        </DataShortcut>
+                        <AuthorShortcut>
+                            <ShortAvatar src={this.getAuthor('imageURL')} onError={this.replaceImage.bind(this)}/>
+                            <ShortAuthor><Marked>Author: </Marked>{`${this.getAuthor('firstname')} ${this.getAuthor('surname')}`}</ShortAuthor>
+                        </AuthorShortcut>
+                    </Shortcut>
+                </Real>
+                {this.renderDetailed()}
             </WrappedThread>
         );
     }

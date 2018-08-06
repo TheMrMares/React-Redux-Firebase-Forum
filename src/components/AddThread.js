@@ -138,7 +138,7 @@ class AddThread extends Component {
     }
     render(){
         return(
-            <WrappedAddThread>
+            <WrappedAddThread className={this.props.className}>
                 <CloseAdd onClick={this.informParent.bind(this)}/>
                 <AddForm>
                     <Label>Thread title</Label>

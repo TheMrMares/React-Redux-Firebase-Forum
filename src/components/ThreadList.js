@@ -15,7 +15,7 @@ const WrappedThreadList = styled.div`
 class ThreadList extends Component {
     render(){
         return(
-            <WrappedThreadList>
+            <WrappedThreadList className={this.props.className}>
                 {this.props.data.threads.map((item ,index) => {
                     return <StyledThread title={item.title} text={item.text} userID={item.userID} key={index}/>
                 })}
