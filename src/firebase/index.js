@@ -12,8 +12,17 @@ let config = {
   
 firebase.initializeApp(config);
 
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
 export const auth = firebase.auth();
+
+googleProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+auth.useDeviceLanguage();
+googleProvider.setCustomParameters({
+  'login_hint': 'user@example.com'
+});
+
 export const firestore = firebase.firestore();
+
 
 firestore.settings({
   timestampsInSnapshots: true

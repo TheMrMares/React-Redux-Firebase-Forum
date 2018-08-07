@@ -7,8 +7,6 @@ import {firestore} from './../firebase/index';
 import { SetData, AddData } from './../actions/index';
 import AddThread from './AddThread';
 import ThreadList from './ThreadList';
-import { isValidTimestamp } from '../../node_modules/@firebase/util';
-import { domainToASCII } from 'url';
 
 // # STYLED
 const StyledAddThread = styled(AddThread)``;
@@ -40,7 +38,7 @@ class Home extends Component {
     componentDidMount(){
         firestore.collection('threads').get().then((data) => {
             let filteredData = data.docs.filter((item) => {
-                if(item.ref.id != 'template'){
+                if(item.ref.id !== 'template'){
                     return item;
                 }
             });

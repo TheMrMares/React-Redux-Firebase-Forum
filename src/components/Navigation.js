@@ -1,6 +1,6 @@
 // # IMPORTS
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import colors from './../constants/colors';
 import Item from './Item';
 import {auth} from './../firebase/index';

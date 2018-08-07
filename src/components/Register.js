@@ -1,13 +1,12 @@
 // # IMPORTS
 import React, { Component } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import colors from './../constants/colors';
 import { Redirect } from 'react-router'
-import {auth} from './../firebase/index';
 import { LogIn, UpdateData } from './../actions/index';
 import { connect } from "react-redux";
-import {firestore} from './../firebase/index';
-
+import {firestore, auth, googleProvider} from './../firebase/index';
+import GoogleLogin from './GoogleLogin';
 // # STYLED
 const RegisterTitle = styled.h1`
     font-size: 1.3em;
@@ -152,7 +151,7 @@ class Register extends Component {
         }
         
     }
-    checkRender(){
+    renderRedirect(){
         if(this.state.redirect === true) {
             return <Redirect to="/home"/>
         }
@@ -165,7 +164,7 @@ class Register extends Component {
     render(){
         return(
             <WrappedRegister className={this.props.className}>
-                {this.checkRender()}
+                {this.renderRedirect()}
                 <RegisterTitle>Create new account</RegisterTitle>
                 <RegisterForm>
                     <RegisterSubtitle>User avatar</RegisterSubtitle>
@@ -222,6 +221,7 @@ class Register extends Component {
                         onChange={this.handleChange.bind(this)}/>
 
                     <input type='submit' value='Register' onClick={this.handleSubmit.bind(this)}/>
+                    <GoogleLogin/>
                     {this.renderAlert()}
                 </RegisterForm>
             </WrappedRegister>

@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
 import { connect } from "react-redux";
-import { SetData, AddData } from './../actions/index';
-import { closeSync } from 'fs';
+import { AddData } from './../actions/index';
 // # STYLED
 const Title = styled.input.attrs({
     type: 'text',

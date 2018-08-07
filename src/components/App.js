@@ -1,9 +1,8 @@
 // # IMPORTS
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import styled, { css, injectGlobal } from 'styled-components';
+import styled, { injectGlobal } from 'styled-components';
 import colors from './../constants/colors';
-import {auth} from './../firebase/index';
 import { connect } from "react-redux";
 import Header from './Header';
 import Footer from './Footer';
@@ -12,6 +11,9 @@ import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import Profile from './Profile';
+import {auth} from './../firebase/index';
+import robotoURL from './../fonts/Roboto-Regular.ttf';
+import robotoCondensedURL from './../fonts/RobotoCondensed-Regular.ttf';
 
 // # STYLED
 const StyledHeader = styled(Header)``;
@@ -39,6 +41,14 @@ const WrappedApp = styled.div`
   }
 `;
 injectGlobal`
+  @font-face {
+    font-family: roboto;
+    src: url(${robotoURL});
+  }
+  @font-face {
+    font-family: robotoCondensed;
+    src: url(${robotoCondensedURL});
+  }
   html,body {
     margin: 0; padding: 0;
     color: ${colors.dark};
@@ -47,8 +57,8 @@ injectGlobal`
     max-width: 100%; position: relative;
   }
   * {
+    font-family: roboto;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
     transition: 0.15s ease;
   }
   input, textarea, button {
