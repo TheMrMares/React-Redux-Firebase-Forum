@@ -27,18 +27,26 @@ const ButtonsHolder = styled.div`
 `;
 const Submit = styled.input.attrs({
     type: 'submit'
-})``;
+})`
+    background: ${colors.positive};
+    &:hover {
+        box-shadow: 0px 0px 5px 0px ${colors.positive}
+    }
+`;
 const Cancel = styled.button`
     background: ${colors.alert};
+    &:hover {
+        box-shadow: 0px 0px 5px 0px ${colors.alert}
+    }
 `;
 const AddForm = styled.form`
     position: fixed;
     z-index: 1100;
-    background: ${colors.fair};
+    background: ${colors.dark};
     width: 80%;
     padding: 20px;
     border-radius: 10px;
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.smoothdark};
 `;
 const CloseAdd = styled.div`
     position: fixed;

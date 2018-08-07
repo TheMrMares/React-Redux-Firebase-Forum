@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import { connect } from "react-redux";
 import { UpdateData } from './../actions/index';
-import { firestore, auth } from './../firebase/index';
+import { firestore, auth, db } from './../firebase/index';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
 // # STYLED
 const ProfileTitle = styled.h1`
@@ -21,7 +21,7 @@ const Preview = styled.img`
     width: 130px;
     height: 130px
     border-radius: 100%;
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.smoothdark};
     margin: auto;
 `;
 const ProfileAlert = styled.p`
@@ -37,22 +37,33 @@ const ProfileAlert = styled.p`
 `;
 const ProfileSubtitle = styled.h2`
     font-size: 1.3em;
-    color: ${colors.special};
+    color: ${colors.smoothdark};
 `;
 const ValueTitle = styled.h3`
     font-size: 1.1em;
+    margin: 5px;
 `;
 const SectionForm = styled.form`
     border-radius: 10px;
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.smoothdark};
     padding: 10px;
 `;
+const Category = styled.div`
+    margin: 20px;
+`;
+const Accept = styled.input.attrs({
+    type: 'submit'
+})`
+    background: ${colors.positive};
+    &:hover {
+        box-shadow: 0px 0px 5px 0px ${colors.positive};
+    }
+`;
 const WrappedProfile = styled.section`
-    background: ${colors.fair};
+    background: ${colors.verydark};
     display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
     padding: 40px 0px;
 `;
 // # COMPONENT
@@ -159,8 +170,8 @@ class Profile extends Component {
     render(){
         return(
             <WrappedProfile>
-                <ProfileTitle>Edit your profile</ProfileTitle>
-                <ProfileSubtitle>Avatar</ProfileSubtitle>
+                <Category>
+                    <ProfileSubtitle>Avatar</ProfileSubtitle>
                     <SectionForm>
                         <PreviewHolder>
                             <Preview src={this.state.urlValue} onError={this.replaceImage.bind(this)}/>
@@ -173,10 +184,12 @@ class Profile extends Component {
                             value={this.state.urlValue}
                             onChange={this.handleChange.bind(this)}
                         />
-                        <input type='submit' value='Udpate avatar' onClick={this.submitAvatar.bind(this)}/>
+                        <Accept value='Udpate avatar' onClick={this.submitAvatar.bind(this)}/>
                         {this.renderAvatarAlert()}
                     </SectionForm>
-                <ProfileSubtitle>Personal data</ProfileSubtitle>
+                </Category>
+                <Category>
+                    <ProfileSubtitle>Personal information</ProfileSubtitle>
                     <SectionForm>
                         <ValueTitle>First name</ValueTitle>
                         <input 
@@ -194,9 +207,10 @@ class Profile extends Component {
                             value={this.state.surnameValue}
                             onChange={this.handleChange.bind(this)}
                         />
-                        <input type='submit' value='Udpate personal' onClick={this.submitPersonal.bind(this)}/>
+                        <Accept value='Udpate personal' onClick={this.submitPersonal.bind(this)}/>
                         {this.renderPersonalAlert()}
                     </SectionForm>
+                </Category>
             </WrappedProfile>
         );
     }

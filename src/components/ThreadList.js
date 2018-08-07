@@ -8,7 +8,7 @@ import Thread from './Thread';
 // # STYLED
 const StyledThread = styled(Thread)``;
 const WrappedThreadList = styled.div`
-    border-top: 1px solid ${colors.special};
+    border-top: 1px solid ${colors.smoothdark};
     padding-top: 10px;
 `;
 // # COMPONENT

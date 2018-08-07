@@ -6,15 +6,18 @@ import avatarThumbURL from './../images/avatar-thumb1.1.png';
 // # STYLED
 const Cancel = styled.button`
     background: ${colors.alert};
+    &:hover {
+        box-shadow: 0px 0px 5px 0px ${colors.alert};
+    }
 `;
 const DetailedHeader = styled.div`
-    border-bottom: 1px solid ${colors.grey};
+    border-bottom: 1px solid ${colors.smoothdark};
 `;
 const DetailedBody = styled.div`    
     text-align: left;
 `;
 const DetailedFooter = styled.div`
-    border-top: 1px solid ${colors.grey};
+    border-top: 1px solid ${colors.smoothdark};
     display: flex;
     flex-direction: row;
 `;
@@ -43,16 +46,15 @@ const ThreadTitle = styled.h1`
     margin: 5px 15px 5px 5px;
 `;
 const ThreadAvatar = styled.img`
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.smoothdark};
     width: 30px;
     height: 30px;
     border-radius: 100%;
-    margin-right: 10px;
 `;
 const ThreadAuthor = styled.h2`
     margin: 5px;
     font-size: 0.8em;
-    color: ${colors.special};
+    color: ${colors.fair};
 `;
 const Content = styled.p`
     margin: 3px;
@@ -60,12 +62,12 @@ const Content = styled.p`
 const Detailed = styled.article`
     position: fixed;
     z-index: 1050;
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.smoothdark};
     border-radius: 10px;
     padding: 10px;
     display: flex;
     flex-direction: column;
-    background: ${colors.fair};
+    background: ${colors.dark};
     min-width: 60%
     ${DetailedHeader}, ${DetailedBody} {
         padding: 10px;

@@ -14,9 +14,9 @@ const StyledUserInfo = styled(UserInfo)``;
 const HeaderTitle = styled.h1`
     font-size: 1.5em;
     text-transform: uppercase;
-    color: ${colors.special};
-    border: 2px solid ${colors.special};
-    border-radius: 10px;
+    color: ${colors.fair};
+    border: 2px solid ${colors.fair};
+    font-weight: bold;
     padding: 15px;
     margin: 10px;
     display: flex;
@@ -25,7 +25,7 @@ const HeaderTitle = styled.h1`
 `;
 const WrappedHeader = styled.header`
     padding: 50px 0px 0px 0px;
-    background: ${colors.fair};
+    background: ${colors.verydark};
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -38,10 +38,15 @@ class Header extends Component {
             return <StyledUserInfo/>
         }
     }
+    renderTitle(){
+        if(this.props.auths.isAuth !== true){
+            return <HeaderTitle>Awesomeness Forum</HeaderTitle>
+        }
+    }
     render(){
         return(
             <WrappedHeader className={this.props.className}>
-                <HeaderTitle>Awesomeness Forum</HeaderTitle>
+                {this.renderTitle()}
                 {this.renderUserInfo()}
                 <StyledNavigation/>
             </WrappedHeader>

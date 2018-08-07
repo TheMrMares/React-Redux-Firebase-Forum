@@ -29,15 +29,9 @@ const WrappedApp = styled.div`
   min-height: 100vh
   display: flex;
   flex-direction: column;
-  background: ${colors.dark};
+  background: ${colors.verydark};
   ${StyledHeader}, ${StyledFooter} {
     width: 100%;
-  }
-  ${StyledHeader} {
-    border-bottom: 1px solid ${colors.smooth}
-  }
-  ${StyledFooter}{
-    border-top: 1px solid ${colors.smooth}
   }
 `;
 injectGlobal`
@@ -51,7 +45,6 @@ injectGlobal`
   }
   html,body {
     margin: 0; padding: 0;
-    color: ${colors.dark};
   }
   img {
     max-width: 100%; position: relative;
@@ -60,6 +53,7 @@ injectGlobal`
     font-family: roboto;
     box-sizing: border-box;
     transition: 0.15s ease;
+    color: ${colors.fair};
   }
   input, textarea, button {
     margin: 10px;
@@ -68,12 +62,11 @@ injectGlobal`
     appearance: none;
     &:focus {
       outline: none;
-      box-shadow: 0px 0px 3px 0px ${colors.special};
+      box-shadow: 0px 0px 8px 0px ${colors.fair};
     }
   }
   input[type=submit], button{
     border: none;
-    background: ${colors.special};
     color: ${colors.fair};
     text-transform: uppercase;
     font-weight: bold;
@@ -81,13 +74,11 @@ injectGlobal`
     display: flex; 
     justify-content: center;
     padding: 5px 30px;
-    &:hover {
-      box-shadow: 0px 0px 5px 0px ${colors.special};
-    }
   }
   input[type=email], input[type=password], input[type=text], textarea{
     border: 1px solid ${colors.grey};
     background: ${colors.fair};
+    color: ${colors.dark};
   }
 `;
 // # COMPONENT

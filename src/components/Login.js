@@ -21,17 +21,26 @@ const LoginAlert = styled.p`
     max-width: 300px;
     text-align: center;
 `;
+const GoLogin = styled.input.attrs({
+    type: 'submit'
+})`
+    background: ${colors.special};
+    &:hover {
+        box-shadow: 0px 0px 5px 0px ${colors.special};
+    }
+`;
 const LoginSubtitle = styled.h2`
     font-size: 1em;
     margin: 5px;
 `;
 const LoginForm = styled.form`
     border-radius: 10px;
-    border: 1px solid ${colors.grey};
+    background: ${colors.dark};
+    border: 1px solid ${colors.smoothdark};
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 10px;
+    padding: 20px 40px;
 `;
 const GoogleSign = styled.input.attrs({
     type: 'submit',
@@ -43,7 +52,7 @@ const GoogleSign = styled.input.attrs({
     }
 `;
 const WrappedLogin = styled.section`
-    background: ${colors.fair};
+    background: ${colors.verydark};
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -128,7 +137,7 @@ class Login extends Component {
                         value={this.state.passwordValue} 
                         onChange={this.handleChange.bind(this)}
                     />
-                    <input type='submit' value='Log in' onClick={this.handleSubmit.bind(this)}/>
+                    <GoLogin value='Log in' onClick={this.handleSubmit.bind(this)}/>
                     <GoogleLogin/>
                     {this.renderAlert()}
                 </LoginForm>

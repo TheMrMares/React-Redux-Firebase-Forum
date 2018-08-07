@@ -7,13 +7,12 @@ import colors from './../constants/colors';
 const StyledLink = styled(Link)`
   padding: 15px 40px;
   text-decoration: none;
-  color: ${colors.dark};
+  color: ${colors.fair};
   font-weight: bold;
   text-transform: uppercase;
   transition: 0.15s ease;
   &:hover {
-      color: ${colors.fair};
-      background: ${colors.special};
+      background: ${colors.smoothdark};
   }
 `;
 const WrappedItem = styled.li`

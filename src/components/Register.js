@@ -28,14 +28,23 @@ const Alert = styled.p`
 `;
 const RegisterForm = styled.form`
     border-radius: 10px;
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.smoothdark};
+    background: ${colors.dark}
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    padding: 10px;
+    padding: 20px 40px;
+`;
+const GoRegister = styled.input.attrs({
+    type: 'submit'
+})`
+    background: ${colors.special};
+    &:hover {
+        box-shadow: 0px 0px 5px 0px ${colors.special};
+    }
 `;
 const WrappedRegister = styled.section`
-    background: ${colors.fair};
+    background: ${colors.verydark};
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -183,6 +192,7 @@ class Register extends Component {
                         value={this.state.emailValue} 
                         onChange={this.handleChange.bind(this)}
                     />
+                    <RegisterSubtitle>Repeat email</RegisterSubtitle>
                     <input 
                         type='email' 
                         id='regEmailConfirmation' 
@@ -190,7 +200,7 @@ class Register extends Component {
                         value={this.state.cemailValue}
                         onChange={this.handleChange.bind(this)}
                     />
-                    <RegisterSubtitle>User personal information</RegisterSubtitle>
+                    <RegisterSubtitle>Firstname</RegisterSubtitle>
                     <input 
                         type='text' 
                         id='regFirstname' 
@@ -198,6 +208,7 @@ class Register extends Component {
                         value={this.state.firstnameValue}
                         onChange={this.handleChange.bind(this)}
                     />
+                    <RegisterSubtitle>Surname</RegisterSubtitle>
                     <input 
                         type='text' 
                         id='regSurname' 
@@ -213,6 +224,7 @@ class Register extends Component {
                         value={this.state.passwordValue}
                         onChange={this.handleChange.bind(this)}
                     />
+                    <RegisterSubtitle>Repeat password</RegisterSubtitle>
                     <input 
                         type='password' 
                         id='regPasswordConfirmation' 
@@ -220,7 +232,7 @@ class Register extends Component {
                         value={this.state.cpasswordValue} 
                         onChange={this.handleChange.bind(this)}/>
 
-                    <input type='submit' value='Register' onClick={this.handleSubmit.bind(this)}/>
+                    <GoRegister value='Register' onClick={this.handleSubmit.bind(this)}/>
                     <GoogleLogin/>
                     {this.renderAlert()}
                 </RegisterForm>

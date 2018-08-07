@@ -9,7 +9,7 @@ const InformationHolder = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 0px 20px 20px 20px;
     flex-direction: column;
 `;
 const AvatarHolder = styled.div`
@@ -22,12 +22,13 @@ const Avatar = styled.img`
     width: 130px;
     height: 130px
     border-radius: 100%;
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.smoothdark};
 `;
 const InfoTitle = styled.h1`
     flex: 0 0 100%;
     font-size: 0.8em;
     margin: 0px;
+    color: ${colors.special};
 `;
 const Information = styled.p`
     margin: 0px;
@@ -37,12 +38,11 @@ const Label = styled.h2`
     font-size: 0.8em;
 `;
 const WrappedUserInfo = styled.div`
-    border: 1px solid red;
+    background: ${colors.dark};
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    border: 1px solid ${colors.grey};
-    margin-top: 10px;
+    border: 1px solid ${colors.smoothdark};
 `;
 // # COMPONENT
 class UserInfo extends Component {

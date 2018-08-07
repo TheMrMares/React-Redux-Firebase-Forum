@@ -13,18 +13,26 @@ const StyledAddThread = styled(AddThread)``;
 const StyledThreadList = styled(ThreadList)``;
 const ThreadArea = styled.div`
     width: 100%;
-    padding: 20px;
+    padding: 0px 20px;
 `;
 const HomeSubtitle = styled.h2`
     font-size: 1.2em;
-    color: ${colors.special};
+    color: ${colors.fair};
 `;
 const HomeTitle = styled.h1`
     font-size: 1.5em;
+    margin: 5px;
+    color: ${colors.smoothdark}
+`;
+const CreateNew = styled.button`
+    background: ${colors.positive};
+    &:hover {
+        box-shadow: 0px 0px 5px 0px ${colors.positive};
+    }
 `;
 const WrappedHome = styled.section`
-    background: ${colors.fair};
-    padding: 40px 0px;
+    background: ${colors.verydark};
+    padding: 40px 20px;
 `;
 // # COMPONENT
 class Home extends Component {
@@ -43,17 +51,11 @@ class Home extends Component {
                 }
             });
             this.props.setData(filteredData.map((item) => {
+                console.log();
                 return item.data();
             }));
         }).catch((error) => {
             console.log(`# SET THREADS ERROR - Code: ${error.code} Message: ${error.message}`);
-        });
-    }
-    getData(){
-        firestore.collection('threads').get().then(snapshot => {
-            snapshot.docs.forEach(doc => {
-                console.log(doc.data().title);
-            });
         });
     }
     showAddThread(){
@@ -73,13 +75,13 @@ class Home extends Component {
     }
     render(){
         return(
-            <WrappedHome>
+            <WrappedHome className={this.props.className}>
                 <HomeTitle>Threads</HomeTitle>
                 <ThreadArea>
                     <HomeSubtitle>Add new thread</HomeSubtitle>
-                    <button onClick={this.showAddThread.bind(this)}>Add</button>
+                    <CreateNew onClick={this.showAddThread.bind(this)}>Create new</CreateNew>
                     {this.renderAddThread()}
-                    <HomeSubtitle>List of threads</HomeSubtitle>
+                    <HomeSubtitle>Users threads</HomeSubtitle>
                     <StyledThreadList/>
                 </ThreadArea>
             </WrappedHome>

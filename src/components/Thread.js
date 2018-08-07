@@ -6,15 +6,6 @@ import {firestore} from './../firebase/index';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
 import DetailedThread from './DetailedThread';
 // # STYLED
-const DataShortcut = styled.div`
-    flex: 0 0 70%;
-`;
-const AuthorShortcut = styled.div`
-    flex: 0 0 30%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-`;
 const Shortcut = styled.div`
     width: 100%;
     display: flex;
@@ -27,7 +18,7 @@ const ShortTitle = styled.h2`
     font-size: 0.9em;
 `;
 const ShortAvatar = styled.img`
-    border: 1px solid ${colors.grey};
+    border: 1px solid ${colors.smoothdark};
     width: 30px;
     height: 30px;
     border-radius: 100%;
@@ -40,16 +31,32 @@ const ShortAuthor = styled.h3`
 const Marked = styled.span`
     color: ${colors.special};
     font-size: 0.8em;
-    margin-right: 10px;
+`;
+const DataShortcut = styled.div`
+    flex: 0 0 70%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    ${Marked} {
+        margin-left: 10px;
+    }
+`;
+const AuthorShortcut = styled.div`
+    flex: 0 0 30%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    ${Marked} {
+        margin-right: 10px;
+    }
 `;
 const StyledDetailed = styled(DetailedThread)``;
 const Real = styled.div``;
 const WrappedThread = styled.div`
-    border-radius: 10px;
-    border: 1px solid ${colors.grey};
+    background: ${colors.dark}
     margin: 10px 5px;
     &:hover {
-        border: 1px solid ${colors.special};
+        background: ${colors.littledark};
     }
 `;
 // # COMPONENT
@@ -106,13 +113,15 @@ export default class Thread extends Component {
                 <Real onClick={this.showDetailed.bind(this)}>
                     <Shortcut>
                         <DataShortcut>
+                            <Marked>Thread: </Marked>
                             <ShortTitle>
                                 {this.props.title}
                             </ShortTitle>
                         </DataShortcut>
                         <AuthorShortcut>
+                            <Marked>Author: </Marked>
                             <ShortAvatar src={this.getAuthor('imageURL')} onError={this.replaceImage.bind(this)}/>
-                            <ShortAuthor><Marked>Author: </Marked>{`${this.getAuthor('firstname')} ${this.getAuthor('surname')}`}</ShortAuthor>
+                            <ShortAuthor>{`${this.getAuthor('firstname')} ${this.getAuthor('surname')}`}</ShortAuthor>
                         </AuthorShortcut>
                     </Shortcut>
                 </Real>

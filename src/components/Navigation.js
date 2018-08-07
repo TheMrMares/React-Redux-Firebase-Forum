@@ -12,19 +12,22 @@ const StyledItem = styled(Item)``;
 const SignOutButton = styled.button`
     padding: 5px 20px;
     background: none;
-    border: 2px solid ${colors.special};
-    color: ${colors.special};
+    border: 2px solid ${colors.alert};
+    color: ${colors.alert};
     border-radius: 10px;
     font-weight: bolder;
     justify-self: flex-end;
     margin-left: 20px;
     &:hover{
         color: ${colors.fair};
-        background: ${colors.special};
+        background: ${colors.alert};
+        box-shadow: 0px 0px 5px 0px ${colors.alert};
     }
 `;
 const WrappedNavigation = styled.ul`
-    background: ${colors.smooth};
+    background: ${colors.dark};
+    border-top: 1px solid ${colors.smoothdark};
+    border-bottom: 1px solid ${colors.smoothdark};
     list-style-type: none;
     display: flex;
     flex-direction: row;
@@ -83,8 +86,7 @@ class Navigation extends Component {
         auth.signOut().then(() => {
             this.props.signOut();
         }).catch((error) => {
-            console.log(`CODE: ${error.code}`);
-            console.log(`MESSAGE: ${error.message}`);
+            console.log(`# SIGN OUT ERROR - Code: ${error.code} Message: ${error.message}`);
         });
     }
     render(){
