@@ -12,20 +12,21 @@ const WrappedCommentList = styled.div`
     border-top: 1px solid ${colors.smoothdark};
     overflow-y: scroll;
     padding: 5px;
+    max-height: 500px;
 `;
 // # COMPONENT
 export default class CommentList extends Component {
     constructor(){
         super();
+        this.sub = null;
         this.counter = 0;
         this.state = {
             comments: []
         }
     }
     componentDidMount(){
-        //comments live updatec
-        console.log('xd');
-        firestore.collection('threads').doc(this.props.refID).collection('comments')
+        //comments live update
+        this.sub = firestore.collection('threads').doc(this.props.refID).collection('comments')
         .onSnapshot(() => {
             firestore.collection('threads').doc(this.props.refID).collection('comments').orderBy('created', 'desc').get().then((data) => {
                 let filteredData = data.docs.filter((item) => {
@@ -41,13 +42,19 @@ export default class CommentList extends Component {
             });
         });
     }
+    componentWillUnmount(){
+        this.sub();
+    }
     render(){
         return(
             <WrappedCommentList>
                 {this.state.comments.map((item, index) => {
                     return <UserComment 
                         comment={item.data().comment} 
-                        userID={item.data().userID} 
+                        authorID={item.data().authorID} 
+                        authorURL={item.data().authorURL}
+                        authorFirstname={item.data().authorFirstname}
+                        authorSurname={item.data().authorSurname} 
                         key={this.counter++}/>
                 })}
             </WrappedCommentList>

@@ -6,7 +6,8 @@ import avatarThumbURL from './../images/avatar-thumb1.1.png';
 import AddComment from './AddComment';
 import CommentList from './CommentList';
 // # STYLED
-const StyledCommentList = styled(CommentList)``;
+const StyledCommentList = styled(CommentList)`
+`;
 const StyledAddComment = styled(AddComment)``;
 const Cancel = styled.button`
     background: ${colors.alert};
@@ -111,6 +112,12 @@ const WrappedDetailedThread = styled.div`
 `;
 // # COMPONENT
 export default class DetailedThread extends Component {
+    componentDidMount(){
+        console.log('component did mount');
+    }
+    componentWillUnmount(){
+        console.log('component will unmount');
+    }
     informParent(){
         this.props.callbackForThread();
     }
