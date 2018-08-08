@@ -50,7 +50,8 @@ class Navigation extends Component {
                         {name: 'Login', path: '/login', showMode: 1},
                         {name: 'Register', path: '/register', showMode: 1},
                         {name: 'Landing', path: '/landing', showMode: 2,},
-                        {name: 'Home', path: '/', showMode: 0},
+                        {name: 'Forum', path: '/', showMode: 0},
+                        {name: 'Shoutbox', path: '/forum', showMode: 0},
                         {name: 'Profile', path: 'profile', showMode: 0}
                     ]
         }
@@ -74,10 +75,8 @@ class Navigation extends Component {
             break;
             case 2:
                 return;
-            break;
             case 3:
                 return <StyledItem text={text} url={url} key={key}/>
-            break;
             default:
             break;
         }

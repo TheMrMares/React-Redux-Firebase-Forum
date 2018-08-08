@@ -11,15 +11,16 @@ import Home from './Home';
 import Login from './Login';
 import Register from './Register';
 import Profile from './Profile';
-import {auth} from './../firebase/index';
 import robotoURL from './../fonts/Roboto-Regular.ttf';
 import robotoCondensedURL from './../fonts/RobotoCondensed-Regular.ttf';
+import Shoutbox from './Shoutbox';
 
 // # STYLED
 const StyledHeader = styled(Header)``;
 const StyledFooter = styled(Footer)``;
 const StyledLand = styled(Land)``;
 const StyledHome = styled(Home)``;
+const StyledShoutbox = styled(Shoutbox)``;
 const StyledProfile = styled(Profile)``;
 const StyledLogin = styled(Login)``;
 const StyledRegister = styled(Register)``;
@@ -104,6 +105,7 @@ class App extends Component {
             <Route exact path='/landing' component={StyledLand}/>
             <ProtectedRoute exact path='/' component={StyledHome} authenticated={this.props.auths.isAuth}/>
             <ProtectedRoute exact path='/profile' component={StyledProfile} authenticated={this.props.auths.isAuth}/>
+            <ProtectedRoute exact path='/forum' component={StyledShoutbox} authenticated={this.props.auths.isAuth}/>
             <Route exact path='/login' component={StyledLogin}/>
             <Route exact path='/register' component={StyledRegister}/>
           <StyledFooter/>

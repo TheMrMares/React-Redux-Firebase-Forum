@@ -27,3 +27,8 @@ export const AddData = (payload) => ({
     type: 'ADD_DATA',
     payload: payload
 })
+//messagesReducer
+export const SetMessages = (payload) => ({
+    type: 'SET_MESSAGES',
+    payload: payload
+})

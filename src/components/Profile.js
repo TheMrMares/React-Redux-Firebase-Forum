@@ -4,12 +4,9 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import { connect } from "react-redux";
 import { UpdateData } from './../actions/index';
-import { firestore, auth, db } from './../firebase/index';
+import { firestore, auth} from './../firebase/index';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
 // # STYLED
-const ProfileTitle = styled.h1`
-    font-size: 1.5em;
-`;
 const PreviewHolder = styled.div`
     width: 100%;
     display: flex;

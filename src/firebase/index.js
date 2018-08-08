@@ -27,4 +27,5 @@ firestore.settings({
   timestampsInSnapshots: true
 });
 
-console.log(firebase.firestore.FieldValue.serverTimestamp());
+let timestamp = firebase.firestore.FieldValue.serverTimestamp();
+console.log(timestamp)

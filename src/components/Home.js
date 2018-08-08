@@ -51,7 +51,6 @@ class Home extends Component {
                 }
             });
             this.props.setData(filteredData.map((item) => {
-                console.log();
                 return item.data();
             }));
         }).catch((error) => {
