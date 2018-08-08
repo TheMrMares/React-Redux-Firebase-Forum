@@ -5,62 +5,64 @@ import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
 import { connect } from 'react-redux';
 // # STYLED
-const SendMessage = styled.input.attrs({
+const CommentField = styled.textarea.attrs({
+    placeholder: 'Type your comment here...'
+})`
+    resize: none;
+`;
+const SendComment = styled.input.attrs({
     type: 'submit',
-    value: 'Send message'
+    value: 'Post comment'
 })`
     background: ${colors.positive};
     &:hover {
         box-shadow: 0px 0px 5px 0px ${colors.positive};
     }
 `;
-const MessageField = styled.input.attrs({
-    type: 'text'
-})`
-    min-width: 50%;
-`;
-const WrappedAdd = styled.div`
+const WrappedAddComment = styled.form`
     display: flex;
-    justify-content: left;
-    align-items: center;
+    flex-direction: column;
 `;
 // # COMPONENT
-class AddMessage extends Component {
+class AddComment extends Component {
     constructor(){
         super();
         this.state = {
-            userMessage: ''
+            commentValue: ''
         }
     }
     handleChange(evt){
         this.setState({
-            userMessage: evt.target.value
+            commentValue: evt.target.value
         })
     }
     handleSubmit(evt){
         evt.preventDefault();
         evt.stopPropagation();
-        firestore.collection('messages').add({
-            message: this.state.userMessage,
+
+        firestore.collection('threads').doc(this.props.refID).collection('comments').add({
+            comment: this.state.commentValue,
             created: new Date(),
             authorID: auth.currentUser.uid,
             authorURL: this.props.auths.authedData.imageURL,
             authorFirstname: this.props.auths.authedData.firstname,
             authorSurname: this.props.auths.authedData.surname
-        }).then(() => {
+        }).then((doc) => {
             this.setState({
-                userMessage: ''
+                commentValue: ''
             })
-        }).catch(function(error) {
-            console.log(`# CHAT MESSAGE POST ERROR - Code: ${error.code} Message: ${error.message}`);
+        })
+        .catch(function(error) {
+            console.log(`# ADD COMMENT ERROR - Code: ${error.code} Message: ${error.message}`);
         });
+
     }
     render(){
         return(
-            <WrappedAdd className={this.props.className}>
-                <MessageField value={this.state.userMessage} onChange={this.handleChange.bind(this)}/>
-                <SendMessage onClick={this.handleSubmit.bind(this)}/>
-            </WrappedAdd>
+            <WrappedAddComment className={this.props.className}>
+                <CommentField value={this.state.commentValue} onChange={this.handleChange.bind(this)}/>
+                <SendComment onClick={this.handleSubmit.bind(this)}/>
+            </WrappedAddComment>
         );
     }
 }
@@ -71,4 +73,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, null)(AddMessage);
+export default connect(mapStateToProps, null)(AddComment);

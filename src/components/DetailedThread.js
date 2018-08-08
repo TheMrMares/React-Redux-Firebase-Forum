@@ -3,7 +3,11 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
+import AddComment from './AddComment';
+import CommentList from './CommentList';
 // # STYLED
+const StyledCommentList = styled(CommentList)``;
+const StyledAddComment = styled(AddComment)``;
 const Cancel = styled.button`
     background: ${colors.alert};
     &:hover {
@@ -59,25 +63,46 @@ const ThreadAuthor = styled.h2`
 const Content = styled.p`
     margin: 3px;
 `;
-const Detailed = styled.article`
-    position: fixed;
-    z-index: 1050;
-    border: 1px solid ${colors.smoothdark};
-    border-radius: 10px;
-    padding: 10px;
+const CommentLabel = styled.h1`
+    margin: 3px;
+    font-size: 1em;
+`;
+const Detailed = styled.div`
     display: flex;
     flex-direction: column;
     background: ${colors.dark};
-    min-width: 60%
+    border: 1px solid ${colors.smoothdark};
+    border-radius: 10px;
+    padding: 10px;
+    width: 70%;
     ${DetailedHeader}, ${DetailedBody} {
         padding: 10px;
+    }
+`;
+const CommentsArea = styled.div`
+    background: ${colors.dark};
+    border: 1px solid ${colors.smoothdark};
+    border-radius: 10px;
+    padding: 10px;
+    width: 30%;
+    margin-left: 10px;
+`;
+const Wrapper = styled.article`
+    position: fixed;
+    z-index: 1050;
+    min-width: 80%
+    display: flex;
+    flex-direciton: row;
+    max-height: 80%;
+    ${Detailed}, ${CommentsArea} {
+        min-height: 500px;
     }
 `;
 const WrappedDetailedThread = styled.div`
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    min-height: 100%;
     position: fixed;
     display: flex;
     justify-content: center;
@@ -96,23 +121,31 @@ export default class DetailedThread extends Component {
         return(
             <WrappedDetailedThread className={this.props.className}>
                 <CloseDetailed onClick={this.informParent.bind(this)}/>
-                <Detailed>
-                    <DetailedHeader>
-                        <ThreadTitle>{this.props.title}</ThreadTitle>
-                    </DetailedHeader>
-                    <DetailedBody>
-                        <Content>{this.props.text}</Content>
-                    </DetailedBody>
-                    <DetailedFooter>
-                        <LeftFooter>
-                            <Cancel onClick={this.informParent.bind(this)}>Close</Cancel>
-                        </LeftFooter>
-                        <RightFooter>
-                            <ThreadAvatar src={this.props.avatarURL} onError={this.replaceImage.bind(this)}/>
-                            <ThreadAuthor>{this.props.author}</ThreadAuthor>
-                        </RightFooter>
-                    </DetailedFooter>
-                </Detailed>
+                <Wrapper>
+                    <Detailed>
+                        <DetailedHeader>
+                            <ThreadTitle>{this.props.title}</ThreadTitle>
+                        </DetailedHeader>
+                        <DetailedBody>
+                            <Content>{this.props.text}</Content>
+                        </DetailedBody>
+                        <DetailedFooter>
+                            <LeftFooter>
+                                <Cancel onClick={this.informParent.bind(this)}>Close</Cancel>
+                            </LeftFooter>
+                            <RightFooter>
+                                <ThreadAvatar src={this.props.avatarURL} onError={this.replaceImage.bind(this)}/>
+                                <ThreadAuthor>{this.props.author}</ThreadAuthor>
+                            </RightFooter>
+                        </DetailedFooter>
+                    </Detailed>
+                    <CommentsArea>
+                        <CommentLabel>Add comment</CommentLabel>
+                        <StyledAddComment refID={this.props.refID}/>
+                        <CommentLabel>User comments</CommentLabel>
+                        <StyledCommentList refID={this.props.refID}/>
+                    </CommentsArea>
+                </Wrapper>
             </WrappedDetailedThread>
         );
     }

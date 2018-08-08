@@ -12,12 +12,24 @@ const WrappedThreadList = styled.div`
 `;
 // # COMPONENT
 class ThreadList extends Component {
+    constructor(){
+        super()
+        this.counter = 0;
+    }
     render(){
         return(
             <WrappedThreadList className={this.props.className}>
                 {this.props.threads.threads.map((item ,index) => {
-                    console.log(item.ref.id);
-                    return <StyledThread refID={item.ref.id} title={item.data().title} text={item.data().text} userID={item.data().userID} key={index}/>
+                    return <StyledThread 
+                        refID={item.ref.id} 
+                        title={item.data().title} 
+                        text={item.data().text} 
+                        authorID={item.data().authorID} 
+                        authorURL={item.data().authorURL}
+                        authorFirstname={item.data().authorFirstname}
+                        authorSurname={item.data().authorSurname}
+                        key={this.counter++}
+                    />
                 })}
             </WrappedThreadList>
         );

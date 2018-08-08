@@ -25,12 +25,23 @@ const WrappedChat = styled.div`
 `;
 // # COMPONENT
 class Chat extends Component {
+    constructor() {
+        super();
+        this.counter = 0;
+    }
     render() {
         return(
             <WrappedChat>
                 <ChatArea>
                     {this.props.messages.messages.map((item ,index) => {
-                        return <ChatMessage text={item.message} userID={item.userID} key={index}/>
+                        return <ChatMessage 
+                            text={item.data().message} 
+                            authorID={item.data().authorID}
+                            authorURL={item.data().authorURL}
+                            authorFirstname={item.data().authorFirstname}
+                            authorSurname={item.data().authorSurname}
+                            key={this.counter++}
+                        />
                     })}
                 </ChatArea>
                 <SendArea>

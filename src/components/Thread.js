@@ -65,26 +65,11 @@ export default class Thread extends Component {
     constructor(){
         super()
         this.state = {
-            author: null,
             isDetailed: false
         }
     }
-    componentDidMount(){
-        firestore.collection('users').doc(this.props.userID).get().then((doc) => {
-            this.setState({
-                author: doc.data()
-            })
-        }).catch((error) => {
-            console.log(`# READ AUTHOR ERROR - Code: ${error.code} Message: ${error.message}`);
-        });
-    }
     replaceImage(evt){
         evt.target.src = avatarThumbURL;
-    }
-    getAuthor(fieldname){
-        if(this.state.author != null){
-            return this.state.author[fieldname];
-        }
     }
     showDetailed(){
         this.setState({
@@ -100,9 +85,10 @@ export default class Thread extends Component {
     }
     renderDetailed(){
         if(this.state.isDetailed === true){
-            return <StyledDetailed 
-                avatarURL={this.getAuthor('imageURL')} 
-                author={`${this.getAuthor('firstname')} ${this.getAuthor('surname')}`} 
+            return <StyledDetailed
+                refID={this.props.refID}
+                avatarURL={this.props.authorURL} 
+                author={`${this.props.authorFirstname} ${this.props.authorSurname}`} 
                 title={this.props.title} text={this.props.text} 
                 callbackForThread={this.hideDetailed.bind(this)}
             />;
@@ -121,8 +107,8 @@ export default class Thread extends Component {
                         </DataShortcut>
                         <AuthorShortcut>
                             <Marked>Author: </Marked>
-                            <ShortAvatar src={this.getAuthor('imageURL')} onError={this.replaceImage.bind(this)}/>
-                            <ShortAuthor>{`${this.getAuthor('firstname')} ${this.getAuthor('surname')}`}</ShortAuthor>
+                            <ShortAvatar src={this.props.authorURL} onError={this.replaceImage.bind(this)}/>
+                            <ShortAuthor>{`${this.props.authorFirstname} ${this.props.authorSurname}`}</ShortAuthor>
                         </AuthorShortcut>
                     </Shortcut>
                 </Real>

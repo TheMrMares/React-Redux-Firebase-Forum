@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
 // # STYLED
 const InformationHolder = styled.div`

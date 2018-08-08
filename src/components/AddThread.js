@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
+import { connect } from 'react-redux';
 // # STYLED
 const Title = styled.input.attrs({
     type: 'text',
@@ -77,7 +78,7 @@ const WrappedAddThread = styled.div`
     z-index: 1000;
 `;
 // # COMPONENT
-export default class AddThread extends Component {
+class AddThread extends Component {
     constructor(){
         super();
         this.state = {
@@ -114,8 +115,11 @@ export default class AddThread extends Component {
             firestore.collection('threads').add({
                 title: this.state.titleValue,
                 text: this.state.textValue,
-                userID: auth.currentUser.uid,
-                created: new Date()
+                created: new Date(),
+                authorID: auth.currentUser.uid,
+                authorURL: this.props.auths.authedData.imageURL,
+                authorFirstname: this.props.auths.authedData.firstname,
+                authorSurname: this.props.auths.authedData.surname
             }).then((doc) => {
                 console.log(doc);
                 firestore.collection('threads').doc(doc.id).collection('comments').doc('template').set({
@@ -171,3 +175,11 @@ export default class AddThread extends Component {
         );
     }
 }
+// # REDUX
+const mapStateToProps = state => {
+    return { 
+        auths: state.auths
+    };
+};
+
+export default connect(mapStateToProps, null)(AddThread);

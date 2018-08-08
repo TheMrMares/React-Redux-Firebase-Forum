@@ -37,6 +37,9 @@ const WrappedApp = styled.div`
   }
 `;
 injectGlobal`
+  .prevent-scroll {
+    overflow: hidden;
+  }
   @font-face {
     font-family: roboto;
     src: url(${robotoURL});
@@ -101,7 +104,6 @@ class App extends Component {
     //threads live updates
     firestore.collection("threads")
     .onSnapshot(() => {
-        console.log('thread snapshot');
         firestore.collection('threads').orderBy('created', 'desc').get().then((data) => {
             let filteredData = data.docs.filter((item) => {
                 if(item.ref.id !== 'template'){
@@ -125,7 +127,7 @@ class App extends Component {
                 }
             });
             this.props.setMessages(filteredData.map((item) => {
-                return item.data();
+                return item;
             }));
         }).catch((error) => {
             console.log(`# SET THREADS ERROR - Code: ${error.code} Message: ${error.message}`);
