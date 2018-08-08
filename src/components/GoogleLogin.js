@@ -29,10 +29,8 @@ class GoogleLogin extends Component {
         evt.preventDefault();
         evt.stopPropagation();
         auth.signInWithPopup(googleProvider).then((result) => {
-            let token = result.credential.accessToken;
             let user = result.user;
             let userName = user.displayName.split(' ');
-            console.log(userName);
             firestore.collection('users').doc(user.uid).set({
                 email: user.email,
                 firstname: userName[0],

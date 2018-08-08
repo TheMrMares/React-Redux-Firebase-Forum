@@ -117,7 +117,8 @@ class AddThread extends Component {
             firestore.collection('threads').add({
                 title: this.state.titleValue,
                 text: this.state.textValue,
-                userID: auth.currentUser.uid
+                userID: auth.currentUser.uid,
+                created: new Date()
             }).then((doc) => {
                 firestore.collection('threads').doc(doc.id).get().then((newdoc) => {
                     this.props.addData(newdoc.data())

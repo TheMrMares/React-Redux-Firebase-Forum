@@ -26,6 +26,3 @@ googleProvider.setCustomParameters({
 firestore.settings({
   timestampsInSnapshots: true
 });
-
-let timestamp = firebase.firestore.FieldValue.serverTimestamp();
-console.log(timestamp)

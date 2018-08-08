@@ -58,7 +58,8 @@ class Chat extends Component {
         evt.stopPropagation();
         firestore.collection('messages').add({
             message: this.state.userMessage,
-            userID: auth.currentUser.uid
+            userID: auth.currentUser.uid,
+            created: new Date()
         }).then((doc) => {
             this.setState({
                 userMessage: ''

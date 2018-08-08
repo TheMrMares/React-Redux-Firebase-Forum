@@ -44,7 +44,7 @@ class Home extends Component {
         };
     }
     componentDidMount(){
-        firestore.collection('threads').get().then((data) => {
+        firestore.collection('threads').orderBy('created', 'desc').get().then((data) => {
             let filteredData = data.docs.filter((item) => {
                 if(item.ref.id !== 'template'){
                     return item;
