@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
 import { connect } from 'react-redux';
+import firebase from 'firebase/app'
 // # STYLED
 const SendMessage = styled.input.attrs({
     type: 'submit',
@@ -42,7 +43,7 @@ class AddMessage extends Component {
         evt.stopPropagation();
         firestore.collection('messages').add({
             message: this.state.userMessage,
-            created: new Date(),
+            created: firebase.firestore.FieldValue.serverTimestamp(),
             authorID: auth.currentUser.uid,
             authorURL: this.props.auths.authedData.imageURL,
             authorFirstname: this.props.auths.authedData.firstname,

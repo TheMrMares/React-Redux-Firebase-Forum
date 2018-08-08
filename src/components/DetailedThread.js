@@ -112,12 +112,6 @@ const WrappedDetailedThread = styled.div`
 `;
 // # COMPONENT
 export default class DetailedThread extends Component {
-    componentDidMount(){
-        console.log('component did mount');
-    }
-    componentWillUnmount(){
-        console.log('component will unmount');
-    }
     informParent(){
         this.props.callbackForThread();
     }

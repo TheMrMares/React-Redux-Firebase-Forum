@@ -16,6 +16,7 @@ import robotoCondensedURL from './../fonts/RobotoCondensed-Regular.ttf';
 import Shoutbox from './Shoutbox';
 import {firestore, auth} from './../firebase/index';
 import {SetMessages, SetThreads} from './../actions/index';
+
 // # STYLED
 const StyledHeader = styled(Header)``;
 const StyledFooter = styled(Footer)``;

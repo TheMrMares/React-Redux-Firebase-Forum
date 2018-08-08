@@ -5,9 +5,6 @@ import colors from './../constants/colors';
 import {firestore} from './../firebase/index';
 import UserComment from './UserComment';
 // # STYLED
-const StyledComment = styled(UserComment)`
-
-`;
 const WrappedCommentList = styled.div`
     border-top: 1px solid ${colors.smoothdark};
     overflow-y: scroll;

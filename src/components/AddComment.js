@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
 import { connect } from 'react-redux';
+import firebase from 'firebase/app';
 // # STYLED
 const CommentField = styled.textarea.attrs({
     placeholder: 'Type your comment here...'
@@ -42,7 +43,7 @@ class AddComment extends Component {
 
         firestore.collection('threads').doc(this.props.refID).collection('comments').add({
             comment: this.state.commentValue,
-            created: new Date(),
+            created: firebase.firestore.FieldValue.serverTimestamp(),
             authorID: auth.currentUser.uid,
             authorURL: this.props.auths.authedData.imageURL,
             authorFirstname: this.props.auths.authedData.firstname,

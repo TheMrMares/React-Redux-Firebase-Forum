@@ -1,9 +1,7 @@
 // # IMPORTS
 import React, { Component } from 'react';
-import {Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from './../constants/colors';
-import {firestore} from './../firebase/index';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
 import DetailedThread from './DetailedThread';
 // # STYLED

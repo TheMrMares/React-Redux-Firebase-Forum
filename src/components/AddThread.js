@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
 import { connect } from 'react-redux';
+import firebase from 'firebase/app';
 // # STYLED
 const Title = styled.input.attrs({
     type: 'text',
@@ -115,7 +116,7 @@ class AddThread extends Component {
             firestore.collection('threads').add({
                 title: this.state.titleValue,
                 text: this.state.textValue,
-                created: new Date(),
+                created: firebase.firestore.FieldValue.serverTimestamp(),
                 authorID: auth.currentUser.uid,
                 authorURL: this.props.auths.authedData.imageURL,
                 authorFirstname: this.props.auths.authedData.firstname,

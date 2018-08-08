@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
-import {firestore} from './../firebase/index';
 // # STYLED
 const Text = styled.p`
     margin: 7px 3px 3px 3px;
