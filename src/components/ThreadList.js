@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import { connect } from "react-redux";
 import Thread from './Thread';
-
 // # STYLED
 const StyledThread = styled(Thread)``;
 const WrappedThreadList = styled.div`
@@ -17,7 +16,8 @@ class ThreadList extends Component {
         return(
             <WrappedThreadList className={this.props.className}>
                 {this.props.threads.threads.map((item ,index) => {
-                    return <StyledThread title={item.title} text={item.text} userID={item.userID} key={index}/>
+                    console.log(item.ref.id);
+                    return <StyledThread refID={item.ref.id} title={item.data().title} text={item.data().text} userID={item.data().userID} key={index}/>
                 })}
             </WrappedThreadList>
         );

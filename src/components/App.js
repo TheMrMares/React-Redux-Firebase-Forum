@@ -16,7 +16,6 @@ import robotoCondensedURL from './../fonts/RobotoCondensed-Regular.ttf';
 import Shoutbox from './Shoutbox';
 import {firestore, auth} from './../firebase/index';
 import {SetMessages, SetThreads} from './../actions/index';
-
 // # STYLED
 const StyledHeader = styled(Header)``;
 const StyledFooter = styled(Footer)``;
@@ -102,6 +101,7 @@ class App extends Component {
     //threads live updates
     firestore.collection("threads")
     .onSnapshot(() => {
+        console.log('thread snapshot');
         firestore.collection('threads').orderBy('created', 'desc').get().then((data) => {
             let filteredData = data.docs.filter((item) => {
                 if(item.ref.id !== 'template'){
@@ -109,7 +109,7 @@ class App extends Component {
                 }
             });
             this.props.setThreads(filteredData.map((item) => {
-                return item.data();
+                return item;
             }));
         }).catch((error) => {
             console.log(`# SET THREADS ERROR - Code: ${error.code} Message: ${error.message}`);
@@ -138,9 +138,10 @@ class App extends Component {
         <WrappedApp>
           <StyledHeader/>
             <Route exact path='/landing' component={StyledLand}/>
-            <ProtectedRoute exact path='/' component={StyledHome} authenticated={auth.currentUser}/>
+            <Route exact path='/' render={() => <Redirect to='/forum'/>}/>
+            <ProtectedRoute exact path='/forum' component={StyledHome} authenticated={auth.currentUser}/>
             <ProtectedRoute exact path='/profile' component={StyledProfile} authenticated={auth.currentUser}/>
-            <ProtectedRoute exact path='/forum' component={StyledShoutbox} authenticated={auth.currentUser}/>
+            <ProtectedRoute exact path='/shoutbox' component={StyledShoutbox} authenticated={auth.currentUser}/>
             <Route exact path='/login' component={StyledLogin}/>
             <Route exact path='/register' component={StyledRegister}/>
           <StyledFooter/>

@@ -36,8 +36,7 @@ export default class Home extends Component {
     constructor(){
         super();
         this.state = {
-            addThreadState: false,
-            threads: []
+            addThreadState: false
         };
     }
     showAddThread(){

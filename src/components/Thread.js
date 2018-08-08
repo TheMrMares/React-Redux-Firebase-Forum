@@ -1,5 +1,6 @@
 // # IMPORTS
 import React, { Component } from 'react';
+import {Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore} from './../firebase/index';

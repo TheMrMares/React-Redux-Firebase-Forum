@@ -87,7 +87,6 @@ const WrappedDetailedThread = styled.div`
 // # COMPONENT
 export default class DetailedThread extends Component {
     informParent(){
-        console.log('inform');
         this.props.callbackForThread();
     }
     replaceImage(evt){

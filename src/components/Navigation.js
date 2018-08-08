@@ -51,8 +51,8 @@ class Navigation extends Component {
                         {name: 'Register', path: '/register', showMode: 1},
                         {name: 'Landing', path: '/landing', showMode: 2,},
                         {name: 'Forum', path: '/', showMode: 0},
-                        {name: 'Shoutbox', path: '/forum', showMode: 0},
-                        {name: 'Profile', path: 'profile', showMode: 0}
+                        {name: 'Shoutbox', path: '/shoutbox', showMode: 0},
+                        {name: 'Profile', path: '/profile', showMode: 0}
                     ]
         }
     }

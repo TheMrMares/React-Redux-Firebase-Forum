@@ -52,7 +52,7 @@ export default class ChatMessage extends Component {
     componentDidMount(){
         this.updateAuthor();
     }
-    componentWillUpdate(){
+    componentWillReceiveProps(){
         this.updateAuthor();
     }
     updateAuthor(){

@@ -117,7 +117,15 @@ export default class AddThread extends Component {
                 userID: auth.currentUser.uid,
                 created: new Date()
             }).then((doc) => {
-                this.informParent();
+                console.log(doc);
+                firestore.collection('threads').doc(doc.id).collection('comments').doc('template').set({
+                    comment: '',
+                    userID: '',
+                    created: new Date()
+                }).then(() => {
+                    this.informParent();
+                })
+                
             })
             .catch(function(error) {
                 console.log(`# ADD THREAD ERROR - Code: ${error.code} Message: ${error.message}`);

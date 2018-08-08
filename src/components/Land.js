@@ -5,26 +5,29 @@ import { Link } from 'react-router-dom';
 import colors from './../constants/colors';
 // # STYLED
 const titlesCss = css`
-    color: ${colors.alert};
     margin: 5px;
 `;
 const LandingTitle = styled.h1`
     ${titlesCss}
+    color: ${colors.alert};
 `;
 const LandingSubtitle = styled.h2`
     ${titlesCss}
+    color: ${colors.alert};
+    font-size: 1.2em;
 `;
 const LandingText = styled.p`
-    color: ${colors.alert};
+    color: ${colors.fair};
     max-width: 50%;
     text-align: center;
 `;
 const LandingLink = styled(Link)`
     margin: 5px;
     color: ${colors.special};
+    font-size: 0.9em;
 `;
 const WrappedLand = styled.section`
-    background: ${colors.fair};
+    background: ${colors.verydark};
     display: flex;
     justify-content: center;
     flex-direction: column;
