@@ -7,7 +7,6 @@ const initialState = {
 const messageReducer = (state = initialState, action) => {
     switch(action.type){
         case SET_MESSAGES:
-            console.log(action.payload);
             return {messages: action.payload}
         default:
             return state;

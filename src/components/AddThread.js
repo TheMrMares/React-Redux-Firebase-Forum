@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
 import { connect } from "react-redux";
-import { AddData } from './../actions/index';
 // # STYLED
 const Title = styled.input.attrs({
     type: 'text',
@@ -79,7 +78,7 @@ const WrappedAddThread = styled.div`
     z-index: 1000;
 `;
 // # COMPONENT
-class AddThread extends Component {
+export default class AddThread extends Component {
     constructor(){
         super();
         this.state = {
@@ -113,19 +112,13 @@ class AddThread extends Component {
         let titleCond = (this.state.titleValue.length >= 6);
         let textCond = (this.state.textValue.length >= 16);
         if(titleCond && textCond){
-
             firestore.collection('threads').add({
                 title: this.state.titleValue,
                 text: this.state.textValue,
                 userID: auth.currentUser.uid,
                 created: new Date()
             }).then((doc) => {
-                firestore.collection('threads').doc(doc.id).get().then((newdoc) => {
-                    this.props.addData(newdoc.data())
-                    this.informParent();
-                }).catch(function(error) {
-                    console.log(`# NEW THREAD STORAGE ERROR - Code: ${error.code} Message: ${error.message}`);
-                });
+                this.informParent();
             })
             .catch(function(error) {
                 console.log(`# ADD THREAD ERROR - Code: ${error.code} Message: ${error.message}`);
@@ -171,10 +164,3 @@ class AddThread extends Component {
         );
     }
 }
-// # REDUX
-const mapDispatchToProps = dispatch => {
-    return {
-        addData: payload => dispatch(AddData(payload))
-    };
-};
-export default connect(null, mapDispatchToProps)(AddThread);

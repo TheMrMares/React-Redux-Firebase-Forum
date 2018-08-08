@@ -2,9 +2,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
-import { connect } from "react-redux";
-import {firestore} from './../firebase/index';
-import { SetData, AddData } from './../actions/index';
 import AddThread from './AddThread';
 import ThreadList from './ThreadList';
 
@@ -35,27 +32,13 @@ const WrappedHome = styled.section`
     padding: 40px 20px;
 `;
 // # COMPONENT
-class Home extends Component {
+export default class Home extends Component {
     constructor(){
         super();
         this.state = {
             addThreadState: false,
             threads: []
         };
-    }
-    componentDidMount(){
-        firestore.collection('threads').orderBy('created', 'desc').get().then((data) => {
-            let filteredData = data.docs.filter((item) => {
-                if(item.ref.id !== 'template'){
-                    return item;
-                }
-            });
-            this.props.setData(filteredData.map((item) => {
-                return item.data();
-            }));
-        }).catch((error) => {
-            console.log(`# SET THREADS ERROR - Code: ${error.code} Message: ${error.message}`);
-        });
     }
     showAddThread(){
         this.setState({
@@ -87,11 +70,3 @@ class Home extends Component {
         );
     }
 }
-// # REDUX
-const mapDispatchToProps = dispatch => {
-    return {
-        setData: payload => dispatch(SetData(payload)),
-        addData: payload => dispatch(AddData(payload))
-    };
-};
-export default connect(null, mapDispatchToProps)(Home);

@@ -16,7 +16,7 @@ class ThreadList extends Component {
     render(){
         return(
             <WrappedThreadList className={this.props.className}>
-                {this.props.data.threads.map((item ,index) => {
+                {this.props.threads.threads.map((item ,index) => {
                     return <StyledThread title={item.title} text={item.text} userID={item.userID} key={index}/>
                 })}
             </WrappedThreadList>
@@ -26,7 +26,7 @@ class ThreadList extends Component {
 // # REDUX
 const mapStateToProps = state => {
     return {
-        data: state.data
+        threads: state.threads
     };
 };
 export default connect(mapStateToProps, null)(ThreadList);

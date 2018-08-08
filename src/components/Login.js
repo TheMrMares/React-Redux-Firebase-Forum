@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
 import { Redirect } from 'react-router'
-import {auth, firestore, googleProvider} from './../firebase/index';
+import {auth, firestore} from './../firebase/index';
 import { connect } from "react-redux";
 import { LogIn } from './../actions/index';
 import GoogleLogin from './GoogleLogin';
@@ -41,15 +41,6 @@ const LoginForm = styled.form`
     flex-direction: column;
     justify-content: flex-start;
     padding: 20px 40px;
-`;
-const GoogleSign = styled.input.attrs({
-    type: 'submit',
-    value: 'Log in with GOOGLE'
-})`
-    background: ${colors.positive} !important;
-    &:hover {
-        box-shadow: 0px 0px 5px 0px ${colors.positive} !important;
-    }
 `;
 const WrappedLogin = styled.section`
     background: ${colors.verydark};

@@ -5,7 +5,7 @@ import colors from './../constants/colors';
 import { Redirect } from 'react-router'
 import { LogIn, UpdateData } from './../actions/index';
 import { connect } from "react-redux";
-import {firestore, auth, googleProvider} from './../firebase/index';
+import {firestore, auth} from './../firebase/index';
 import GoogleLogin from './GoogleLogin';
 // # STYLED
 const RegisterTitle = styled.h1`
@@ -102,7 +102,7 @@ class Register extends Component {
         let passCond = (this.state.passwordValue === this.state.cpasswordValue);
         let firstnameCond = (this.state.firstnameValue.length > 0);
         let surnameCond = (this.state.surnameValue.length > 0);
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
         let validemailCond = (reg.test(this.state.emailValue));
 
         if(emailCond && passCond && firstnameCond && surnameCond && validemailCond){

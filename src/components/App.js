@@ -14,6 +14,8 @@ import Profile from './Profile';
 import robotoURL from './../fonts/Roboto-Regular.ttf';
 import robotoCondensedURL from './../fonts/RobotoCondensed-Regular.ttf';
 import Shoutbox from './Shoutbox';
+import {firestore} from './../firebase/index';
+import {SetMessages, SetThreads} from './../actions/index';
 
 // # STYLED
 const StyledHeader = styled(Header)``;
@@ -97,6 +99,40 @@ const ProtectedRoute = ({component: Component, authenticated, ...rest}) => {
 };
 
 class App extends Component {
+  componentDidMount(){
+    //threads live updates
+    firestore.collection("threads")
+    .onSnapshot(() => {
+        firestore.collection('threads').orderBy('created', 'desc').get().then((data) => {
+            let filteredData = data.docs.filter((item) => {
+                if(item.ref.id !== 'template'){
+                    return item;
+                }
+            });
+            this.props.setThreads(filteredData.map((item) => {
+                return item.data();
+            }));
+        }).catch((error) => {
+            console.log(`# SET THREADS ERROR - Code: ${error.code} Message: ${error.message}`);
+        });
+    });
+    //messages live updates
+    firestore.collection("messages")
+    .onSnapshot(() => {
+        firestore.collection('messages').orderBy('created', 'desc').get().then((data) => {
+            let filteredData = data.docs.filter((item) => {
+                if(item.ref.id !== 'template'){
+                    return item;
+                }
+            });
+            this.props.setMessages(filteredData.map((item) => {
+                return item.data();
+            }));
+        }).catch((error) => {
+            console.log(`# SET THREADS ERROR - Code: ${error.code} Message: ${error.message}`);
+        });
+    });
+  }
   render() {
     return (
       <Router>
@@ -121,5 +157,10 @@ const mapStateToProps = state => {
       auths: state.auths
   };
 };
-
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+      setMessages: payload => dispatch(SetMessages(payload)),
+      setThreads: payload => dispatch(SetThreads(payload))
+  };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(App);
