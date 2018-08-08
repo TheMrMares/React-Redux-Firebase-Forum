@@ -162,7 +162,7 @@ class Register extends Component {
     }
     renderRedirect(){
         if(this.state.redirect === true) {
-            return <Redirect to="/home"/>
+            return <Redirect to="/"/>
         }
     }
     renderAlert(){

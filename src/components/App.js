@@ -14,7 +14,7 @@ import Profile from './Profile';
 import robotoURL from './../fonts/Roboto-Regular.ttf';
 import robotoCondensedURL from './../fonts/RobotoCondensed-Regular.ttf';
 import Shoutbox from './Shoutbox';
-import {firestore} from './../firebase/index';
+import {firestore, auth} from './../firebase/index';
 import {SetMessages, SetThreads} from './../actions/index';
 
 // # STYLED
@@ -65,7 +65,7 @@ injectGlobal`
     appearance: none;
     &:focus {
       outline: none;
-      box-shadow: 0px 0px 8px 0px ${colors.fair};
+      box-shadow: 0px 0px 4px 0px ${colors.fair};
     }
   }
   input[type=submit], button{
@@ -89,7 +89,7 @@ injectGlobal`
 const ProtectedRoute = ({component: Component, authenticated, ...rest}) => {
   return(
     <Route {...rest} render={(props) => {
-      if(authenticated === true) {
+      if(authenticated !== null) {
         return <Component {...props} {...rest} />
       } else {
         return <Redirect to={{pathname: '/login', state: {from: props.location}}} />
@@ -97,7 +97,6 @@ const ProtectedRoute = ({component: Component, authenticated, ...rest}) => {
     }}/>
   );
 };
-
 class App extends Component {
   componentDidMount(){
     //threads live updates
@@ -139,9 +138,9 @@ class App extends Component {
         <WrappedApp>
           <StyledHeader/>
             <Route exact path='/landing' component={StyledLand}/>
-            <ProtectedRoute exact path='/' component={StyledHome} authenticated={this.props.auths.isAuth}/>
-            <ProtectedRoute exact path='/profile' component={StyledProfile} authenticated={this.props.auths.isAuth}/>
-            <ProtectedRoute exact path='/forum' component={StyledShoutbox} authenticated={this.props.auths.isAuth}/>
+            <ProtectedRoute exact path='/' component={StyledHome} authenticated={auth.currentUser}/>
+            <ProtectedRoute exact path='/profile' component={StyledProfile} authenticated={auth.currentUser}/>
+            <ProtectedRoute exact path='/forum' component={StyledShoutbox} authenticated={auth.currentUser}/>
             <Route exact path='/login' component={StyledLogin}/>
             <Route exact path='/register' component={StyledRegister}/>
           <StyledFooter/>

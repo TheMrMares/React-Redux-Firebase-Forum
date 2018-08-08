@@ -57,7 +57,7 @@ class Navigation extends Component {
         }
     }
     renderSignOut(){
-        if(this.props.auths.isAuth === true) {
+        if(auth.currentUser !== null) {
             return <SignOutButton onClick={this.handleSignOut.bind(this)}>Sign Out</SignOutButton>
         }
     }

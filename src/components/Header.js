@@ -5,6 +5,7 @@ import colors from './../constants/colors';
 import Navigation from './Navigation';
 import UserInfo from './UserInfo';
 import { connect } from "react-redux";
+import { auth } from '../firebase';
 
 // # STYLED
 const StyledNavigation = styled(Navigation)`
@@ -34,7 +35,7 @@ const WrappedHeader = styled.header`
 // # COMPONENT
 class Header extends Component {
     renderUserInfo(){
-        if(this.props.auths.isAuth === true) {
+        if(auth.currentUser !== null) {
             return <StyledUserInfo/>
         }
     }

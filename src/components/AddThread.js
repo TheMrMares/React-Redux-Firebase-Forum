@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
-import { connect } from "react-redux";
 // # STYLED
 const Title = styled.input.attrs({
     type: 'text',

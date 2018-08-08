@@ -43,7 +43,7 @@ export default class AddMessage extends Component {
             message: this.state.userMessage,
             userID: auth.currentUser.uid,
             created: new Date()
-        }).then((doc) => {
+        }).then(() => {
             this.setState({
                 userMessage: ''
             })

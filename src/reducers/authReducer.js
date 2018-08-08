@@ -1,13 +1,18 @@
 import {LOG_IN, LOG_OUT, UPDATE_DATA} from './../constants/action-types';
 
-const authReducer = (state = [], action) => {
+const initialState = {
+    authedUser: null,
+    authedData: null
+}
+
+const authReducer = (state = initialState, action) => {
     switch(action.type){
         case LOG_IN:
-            return {isAuth: true, authedUser: action.payload.user, authedData: action.payload.data};
+            return {authedUser: action.payload.user, authedData: action.payload.data};
         case LOG_OUT:
-            return {isAuth: false, authedUser: null, authedData: null};
+            return {authedUser: null, authedData: null};
         case UPDATE_DATA:
-            return {isAuth: state.isAuth, authedUser: state.authedUser, authedData: action.payload};
+            return {authedUser: state.authedUser, authedData: action.payload};
         default:
             return state;
     }

@@ -145,7 +145,7 @@ class Profile extends Component {
         let docRef = firestore.collection('users').doc(user.uid);
         docRef.get().then((doc) => {
             if(doc.exists){
-                this.props.sendData(doc.data());
+                this.props.updateData(doc.data());
             }
         }).catch((error) => {
             console.log(`# READ ERROR - Code: ${error.code} Message: ${error.message}`);
@@ -215,7 +215,7 @@ class Profile extends Component {
 // # REDUX
 const mapDispatchToProps = dispatch => {
     return {
-        sendData: payload => dispatch(UpdateData(payload))
+        updateData: payload => dispatch(UpdateData(payload))
     };
 };
 

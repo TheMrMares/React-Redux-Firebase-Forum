@@ -50,6 +50,12 @@ export default class ChatMessage extends Component {
         }
     }
     componentDidMount(){
+        this.updateAuthor();
+    }
+    componentWillUpdate(){
+        this.updateAuthor();
+    }
+    updateAuthor(){
         firestore.collection('users').doc(this.props.userID).get().then((doc) => {
             this.setState({
                 author: doc.data()
