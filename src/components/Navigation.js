@@ -6,10 +6,27 @@ import Item from './Item';
 import {auth} from './../firebase/index';
 import { connect } from "react-redux";
 import { LogOut } from './../actions/index';
+import resolutions from './../constants/resolutions';
 
 // # STYLED
-const StyledItem = styled(Item)``;
+const StyledItem = styled(Item)`
+    @media only screen and (max-width: ${resolutions.big}) {
+        width: ${100/3}%;
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        width: 50%;
+    }
+`;
 const SignOutButton = styled.button`
+    @media only screen and (max-width: ${resolutions.big}) {
+        width: ${100/3}%;
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        width: 50%;
+        padding: 10px 20px;
+        margin: 0px;
+        border-radius: 0px;
+    }
     padding: 5px 20px;
     background: none;
     border: 2px solid ${colors.alert};
@@ -31,6 +48,7 @@ const WrappedNavigation = styled.ul`
     list-style-type: none;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
     padding: 0px;

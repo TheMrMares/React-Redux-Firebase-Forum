@@ -10,7 +10,6 @@ const WrappedCommentList = styled.div`
     border-top: 1px solid ${colors.smoothdark};
     overflow-y: scroll;
     padding: 5px;
-    max-height: 500px;
 `;
 // # COMPONENT
 export default class CommentList extends Component {
@@ -44,7 +43,7 @@ export default class CommentList extends Component {
     }
     render(){
         return(
-            <WrappedCommentList>
+            <WrappedCommentList className={this.props.className}>
                 {this.state.comments.map((item, index) => {
                     return <UserComment 
                         comment={item.data().comment} 

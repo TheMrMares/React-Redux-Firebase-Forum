@@ -5,12 +5,22 @@ import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
 import { connect } from 'react-redux';
 import firebase from 'firebase/app';
+import resolutions from './../constants/resolutions';
 // # STYLED
 const Title = styled.input.attrs({
     type: 'text',
     placeholder: 'Title'
 })`
-    min-width: 40%;
+    width: 40%;
+    @media only screen and (max-width: ${resolutions.big}) {
+        width: 50%;
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        width: 60%;
+    }
+    @media only screen and (max-width: ${resolutions.small}) {
+        width: 70%;
+    }
 `;
 const Text = styled.textarea.attrs({
     placeholder: 'Content of your thread...'
@@ -18,6 +28,15 @@ const Text = styled.textarea.attrs({
     resize: none;
     min-width: 60%;
     min-height: 300px;
+    @media only screen and (max-width: ${resolutions.big}) {
+        width: 70%;
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        width: 80%;
+    }
+    @media only screen and (max-width: ${resolutions.small}) {
+        width: 90%;
+    }
 `;
 const ButtonsHolder = styled.div`
     width:100%;
@@ -32,11 +51,19 @@ const Submit = styled.input.attrs({
     &:hover {
         box-shadow: 0px 0px 5px 0px ${colors.positive}
     }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1em;
+        padding: 10px 10px;
+    }
 `;
 const Cancel = styled.button`
     background: ${colors.alert};
     &:hover {
         box-shadow: 0px 0px 5px 0px ${colors.alert}
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1em;
+        padding: 10px 10px;
     }
 `;
 const AddForm = styled.form`

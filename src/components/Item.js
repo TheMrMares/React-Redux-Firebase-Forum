@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from './../constants/colors';
+import resolutions from './../constants/resolutions';
 // # STYLED
 const StyledLink = styled(Link)`
   padding: 15px 40px;
@@ -11,6 +12,10 @@ const StyledLink = styled(Link)`
   font-weight: bold;
   text-transform: uppercase;
   transition: 0.15s ease;
+  @media only screen and (max-width: ${resolutions.medium}) {
+    width: 100%;
+    text-align: center;
+  }
   &:hover {
       background: ${colors.smoothdark};
   }

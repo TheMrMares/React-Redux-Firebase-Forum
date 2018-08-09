@@ -16,6 +16,7 @@ import robotoCondensedURL from './../fonts/RobotoCondensed-Regular.ttf';
 import Shoutbox from './Shoutbox';
 import {firestore, auth} from './../firebase/index';
 import {SetMessages, SetThreads} from './../actions/index';
+import resolutions from './../constants/resolutions';
 
 // # STYLED
 const StyledHeader = styled(Header)``;
@@ -80,11 +81,19 @@ injectGlobal`
     display: flex; 
     justify-content: center;
     padding: 5px 30px;
+    @media only screen and (max-width: ${resolutions.medium}) {
+      font-size: 1em;
+      padding: 10px 10px;
+    }
   }
   input[type=email], input[type=password], input[type=text], textarea{
     border: 1px solid ${colors.grey};
     background: ${colors.fair};
     color: ${colors.dark};
+    @media only screen and (max-width: ${resolutions.medium}) {
+      font-size: 1em;
+      padding: 10px 10px;
+    }
   }
 `;
 // # COMPONENT

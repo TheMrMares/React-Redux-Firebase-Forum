@@ -5,10 +5,14 @@ import colors from './../constants/colors';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
 import AddComment from './AddComment';
 import CommentList from './CommentList';
+import resolutions from './../constants/resolutions';
 // # STYLED
 const StyledCommentList = styled(CommentList)`
+    flex: 1 1 100%;
 `;
-const StyledAddComment = styled(AddComment)``;
+const StyledAddComment = styled(AddComment)`
+    flex: 0 0 100%; 
+`;
 const Cancel = styled.button`
     background: ${colors.alert};
     &:hover {
@@ -16,12 +20,15 @@ const Cancel = styled.button`
     }
 `;
 const DetailedHeader = styled.div`
+flex: 0 0 auto;
     border-bottom: 1px solid ${colors.smoothdark};
 `;
 const DetailedBody = styled.div`    
+    flex: 1 1 auto; 
     text-align: left;
 `;
 const DetailedFooter = styled.div`
+    flex: 0 0 auto;
     border-top: 1px solid ${colors.smoothdark};
     display: flex;
     flex-direction: row;
@@ -75,7 +82,7 @@ const Detailed = styled.div`
     border: 1px solid ${colors.smoothdark};
     border-radius: 10px;
     padding: 10px;
-    width: 70%;
+    height: 100%;
     ${DetailedHeader}, ${DetailedBody} {
         padding: 10px;
     }
@@ -85,18 +92,43 @@ const CommentsArea = styled.div`
     border: 1px solid ${colors.smoothdark};
     border-radius: 10px;
     padding: 10px;
-    width: 30%;
     margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 `;
 const Wrapper = styled.article`
     position: fixed;
     z-index: 1050;
-    min-width: 80%
+    width: 80%
+    @media only screen and (max-width: ${resolutions.big}){
+        width: 90%;
+    }
+    @media only screen and (max-width: ${resolutions.medium}){
+        width: 95%;
+    }
+    @media only screen and (max-width: ${resolutions.small}){
+        width:100%;
+    }
     display: flex;
     flex-direciton: row;
     max-height: 80%;
-    ${Detailed}, ${CommentsArea} {
+    ${Detailed}, ${CommentsArea}{ 
         min-height: 500px;
+    }
+    ${Detailed}{
+        width: 70%;
+    }
+    ${CommentsArea}{
+        width: 30%;
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        ${Detailed}{
+            width: 50%;
+        }
+        ${CommentsArea}{
+            width: 50%;
+        }
     }
 `;
 const WrappedDetailedThread = styled.div`

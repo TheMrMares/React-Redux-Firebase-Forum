@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import AddThread from './AddThread';
 import ThreadList from './ThreadList';
+import resolutions from './../constants/resolutions';
 
 // # STYLED
 const StyledAddThread = styled(AddThread)``;
@@ -11,6 +12,13 @@ const StyledThreadList = styled(ThreadList)``;
 const ThreadArea = styled.div`
     width: 100%;
     padding: 0px 20px;
+    
+    @media only screen and (max-width: ${resolutions.medium}) {
+        padding: 0px 10px;
+    }
+    @media only screen and (max-width: ${resolutions.small}) {
+        padding: 0px 0px;
+    }
 `;
 const HomeSubtitle = styled.h2`
     font-size: 1.2em;
@@ -26,10 +34,20 @@ const CreateNew = styled.button`
     &:hover {
         box-shadow: 0px 0px 5px 0px ${colors.positive};
     }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1em;
+        padding: 10px 40px;
+    }
 `;
 const WrappedHome = styled.section`
     background: ${colors.verydark};
     padding: 40px 20px;
+    @media only screen and (max-width: ${resolutions.medium}) {
+        padding: 20px 10px;
+    }
+    @media only screen and (max-width: ${resolutions.small}) {
+        padding: 10px 0px;
+    }
 `;
 // # COMPONENT
 export default class Home extends Component {

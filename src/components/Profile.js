@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { UpdateData } from './../actions/index';
 import { firestore, auth} from './../firebase/index';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
+import resolutions from './../constants/resolutions';
 // # STYLED
 const PreviewHolder = styled.div`
     width: 100%;
@@ -47,6 +48,9 @@ const SectionForm = styled.form`
 `;
 const Category = styled.div`
     margin: 20px;
+    @media only screen and (max-width: ${resolutions.medium}) {
+        width: 90%
+    }
 `;
 const Accept = styled.input.attrs({
     type: 'submit'
@@ -55,6 +59,10 @@ const Accept = styled.input.attrs({
     &:hover {
         box-shadow: 0px 0px 5px 0px ${colors.positive};
     }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1em;
+        padding: 10px 30px;
+    }
 `;
 const WrappedProfile = styled.section`
     background: ${colors.verydark};
@@ -62,6 +70,9 @@ const WrappedProfile = styled.section`
     justify-content: center;
     align-items: flex-start;
     padding: 40px 0px;
+    @media only screen and (max-width: ${resolutions.medium}) {
+        flex-direction: column;
+    }
 `;
 // # COMPONENT
 class Profile extends Component {

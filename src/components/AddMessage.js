@@ -5,6 +5,7 @@ import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
 import { connect } from 'react-redux';
 import firebase from 'firebase/app'
+import resolutions from './../constants/resolutions';
 // # STYLED
 const SendMessage = styled.input.attrs({
     type: 'submit',
@@ -14,15 +15,23 @@ const SendMessage = styled.input.attrs({
     &:hover {
         box-shadow: 0px 0px 5px 0px ${colors.positive};
     }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1em;
+        padding: 20px 10px;
+    }
 `;
 const MessageField = styled.input.attrs({
     type: 'text'
 })`
     min-width: 50%;
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1em;
+        padding: 10px 10px;
+    }
 `;
 const WrappedAdd = styled.div`
     display: flex;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
 `;
 // # COMPONENT

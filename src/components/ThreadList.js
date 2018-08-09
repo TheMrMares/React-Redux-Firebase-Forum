@@ -17,6 +17,18 @@ class ThreadList extends Component {
         return(
             <WrappedThreadList className={this.props.className}>
                 {this.props.threads.threads.map((item ,index) => {
+                    let timestamp = item.data().created;
+                    let date = new Date(timestamp.seconds*1000);
+                    let day = `${date.getDate()}`;
+                    let month = `${date.getMonth()+1}`;
+                    if(day.length === 1){
+                        day = `0${day}`;
+                    }
+                    if(month.length === 1){
+                        month = `0${month}`;
+                    }
+                    let year = date.getFullYear();
+                    let normalDate = `${day} / ${month} / ${year}`;
                     return <StyledThread 
                         refID={item.ref.id} 
                         title={item.data().title} 
@@ -25,6 +37,7 @@ class ThreadList extends Component {
                         authorURL={item.data().authorURL}
                         authorFirstname={item.data().authorFirstname}
                         authorSurname={item.data().authorSurname}
+                        created={normalDate}
                         key={uuidv4()}
                     />
                 })}
