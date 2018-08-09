@@ -7,6 +7,7 @@ import {auth, firestore} from './../firebase/index';
 import { connect } from "react-redux";
 import { LogIn } from './../actions/index';
 import GoogleLogin from './GoogleLogin';
+import resolutions from './../constants/resolutions';
 // # STYLED
 const LoginTitle = styled.h1`
     font-size: 1.3em;
@@ -28,6 +29,10 @@ const GoLogin = styled.input.attrs({
     &:hover {
         box-shadow: 0px 0px 5px 0px ${colors.special};
     }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1.1em;
+        padding: 15px;
+    }
 `;
 const LoginSubtitle = styled.h2`
     font-size: 1em;
@@ -41,6 +46,19 @@ const LoginForm = styled.form`
     flex-direction: column;
     justify-content: flex-start;
     padding: 20px 40px;
+    @media only screen and (max-width: ${resolutions.big}) {
+        width: 40%;
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        width: 50%;
+        input {
+            font-size: 1em;
+            padding: 5px;
+        }
+    }
+    @media only screen and (max-width: ${resolutions.small}) {
+        width: 90%;
+    }
 `;
 const WrappedLogin = styled.section`
     background: ${colors.verydark};

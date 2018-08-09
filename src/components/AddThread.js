@@ -3,12 +3,24 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore, auth} from './../firebase/index';
+import { connect } from 'react-redux';
+import firebase from 'firebase/app';
+import resolutions from './../constants/resolutions';
 // # STYLED
 const Title = styled.input.attrs({
     type: 'text',
     placeholder: 'Title'
 })`
-    min-width: 40%;
+    width: 40%;
+    @media only screen and (max-width: ${resolutions.big}) {
+        width: 50%;
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        width: 60%;
+    }
+    @media only screen and (max-width: ${resolutions.small}) {
+        width: 70%;
+    }
 `;
 const Text = styled.textarea.attrs({
     placeholder: 'Content of your thread...'
@@ -16,6 +28,15 @@ const Text = styled.textarea.attrs({
     resize: none;
     min-width: 60%;
     min-height: 300px;
+    @media only screen and (max-width: ${resolutions.big}) {
+        width: 70%;
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        width: 80%;
+    }
+    @media only screen and (max-width: ${resolutions.small}) {
+        width: 90%;
+    }
 `;
 const ButtonsHolder = styled.div`
     width:100%;
@@ -30,11 +51,19 @@ const Submit = styled.input.attrs({
     &:hover {
         box-shadow: 0px 0px 5px 0px ${colors.positive}
     }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1em;
+        padding: 10px 10px;
+    }
 `;
 const Cancel = styled.button`
     background: ${colors.alert};
     &:hover {
         box-shadow: 0px 0px 5px 0px ${colors.alert}
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1em;
+        padding: 10px 10px;
     }
 `;
 const AddForm = styled.form`
@@ -77,7 +106,7 @@ const WrappedAddThread = styled.div`
     z-index: 1000;
 `;
 // # COMPONENT
-export default class AddThread extends Component {
+class AddThread extends Component {
     constructor(){
         super();
         this.state = {
@@ -114,10 +143,21 @@ export default class AddThread extends Component {
             firestore.collection('threads').add({
                 title: this.state.titleValue,
                 text: this.state.textValue,
-                userID: auth.currentUser.uid,
-                created: new Date()
+                created: firebase.firestore.FieldValue.serverTimestamp(),
+                authorID: auth.currentUser.uid,
+                authorURL: this.props.auths.authedData.imageURL,
+                authorFirstname: this.props.auths.authedData.firstname,
+                authorSurname: this.props.auths.authedData.surname
             }).then((doc) => {
-                this.informParent();
+                console.log(doc);
+                firestore.collection('threads').doc(doc.id).collection('comments').doc('template').set({
+                    comment: '',
+                    userID: '',
+                    created: new Date()
+                }).then(() => {
+                    this.informParent();
+                })
+                
             })
             .catch(function(error) {
                 console.log(`# ADD THREAD ERROR - Code: ${error.code} Message: ${error.message}`);
@@ -163,3 +203,11 @@ export default class AddThread extends Component {
         );
     }
 }
+// # REDUX
+const mapStateToProps = state => {
+    return { 
+        auths: state.auths
+    };
+};
+
+export default connect(mapStateToProps, null)(AddThread);

@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
+import resolutions from './../constants/resolutions';
 // # STYLED
 const InformationHolder = styled.div`
     display: flex;
@@ -43,6 +44,15 @@ const WrappedUserInfo = styled.div`
     flex-direction: column;
     border-radius: 10px;
     border: 1px solid ${colors.smoothdark};
+    @media only screen and (max-width: ${resolutions.big}) {
+        width: 50%;
+    }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        width: 60%;
+    }
+    @media only screen and (max-width: ${resolutions.small}) {
+        width: 90%;
+    }
 `;
 // # COMPONENT
 class UserInfo extends Component {

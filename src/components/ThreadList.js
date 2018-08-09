@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import { connect } from "react-redux";
 import Thread from './Thread';
-
+import uuidv4 from 'uuid/v4'
 // # STYLED
 const StyledThread = styled(Thread)``;
 const WrappedThreadList = styled.div`
@@ -17,7 +17,29 @@ class ThreadList extends Component {
         return(
             <WrappedThreadList className={this.props.className}>
                 {this.props.threads.threads.map((item ,index) => {
-                    return <StyledThread title={item.title} text={item.text} userID={item.userID} key={index}/>
+                    let timestamp = item.data().created;
+                    let date = new Date(timestamp.seconds*1000);
+                    let day = `${date.getDate()}`;
+                    let month = `${date.getMonth()+1}`;
+                    if(day.length === 1){
+                        day = `0${day}`;
+                    }
+                    if(month.length === 1){
+                        month = `0${month}`;
+                    }
+                    let year = date.getFullYear();
+                    let normalDate = `${day} / ${month} / ${year}`;
+                    return <StyledThread 
+                        refID={item.ref.id} 
+                        title={item.data().title} 
+                        text={item.data().text} 
+                        authorID={item.data().authorID} 
+                        authorURL={item.data().authorURL}
+                        authorFirstname={item.data().authorFirstname}
+                        authorSurname={item.data().authorSurname}
+                        created={normalDate}
+                        key={uuidv4()}
+                    />
                 })}
             </WrappedThreadList>
         );

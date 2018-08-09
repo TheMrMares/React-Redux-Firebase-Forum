@@ -16,6 +16,7 @@ import robotoCondensedURL from './../fonts/RobotoCondensed-Regular.ttf';
 import Shoutbox from './Shoutbox';
 import {firestore, auth} from './../firebase/index';
 import {SetMessages, SetThreads} from './../actions/index';
+import resolutions from './../constants/resolutions';
 
 // # STYLED
 const StyledHeader = styled(Header)``;
@@ -38,6 +39,9 @@ const WrappedApp = styled.div`
   }
 `;
 injectGlobal`
+  .prevent-scroll {
+    overflow: hidden;
+  }
   @font-face {
     font-family: roboto;
     src: url(${robotoURL});
@@ -77,11 +81,19 @@ injectGlobal`
     display: flex; 
     justify-content: center;
     padding: 5px 30px;
+    @media only screen and (max-width: ${resolutions.medium}) {
+      font-size: 1em;
+      padding: 10px 10px;
+    }
   }
   input[type=email], input[type=password], input[type=text], textarea{
     border: 1px solid ${colors.grey};
     background: ${colors.fair};
     color: ${colors.dark};
+    @media only screen and (max-width: ${resolutions.medium}) {
+      font-size: 1em;
+      padding: 10px 10px;
+    }
   }
 `;
 // # COMPONENT
@@ -109,7 +121,7 @@ class App extends Component {
                 }
             });
             this.props.setThreads(filteredData.map((item) => {
-                return item.data();
+                return item;
             }));
         }).catch((error) => {
             console.log(`# SET THREADS ERROR - Code: ${error.code} Message: ${error.message}`);
@@ -125,7 +137,7 @@ class App extends Component {
                 }
             });
             this.props.setMessages(filteredData.map((item) => {
-                return item.data();
+                return item;
             }));
         }).catch((error) => {
             console.log(`# SET THREADS ERROR - Code: ${error.code} Message: ${error.message}`);
@@ -138,9 +150,10 @@ class App extends Component {
         <WrappedApp>
           <StyledHeader/>
             <Route exact path='/landing' component={StyledLand}/>
-            <ProtectedRoute exact path='/' component={StyledHome} authenticated={auth.currentUser}/>
+            <Route exact path='/' render={() => <Redirect to='/forum'/>}/>
+            <ProtectedRoute exact path='/forum' component={StyledHome} authenticated={auth.currentUser}/>
             <ProtectedRoute exact path='/profile' component={StyledProfile} authenticated={auth.currentUser}/>
-            <ProtectedRoute exact path='/forum' component={StyledShoutbox} authenticated={auth.currentUser}/>
+            <ProtectedRoute exact path='/shoutbox' component={StyledShoutbox} authenticated={auth.currentUser}/>
             <Route exact path='/login' component={StyledLogin}/>
             <Route exact path='/register' component={StyledRegister}/>
           <StyledFooter/>

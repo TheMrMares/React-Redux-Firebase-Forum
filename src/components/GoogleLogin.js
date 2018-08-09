@@ -6,17 +6,25 @@ import { Redirect } from 'react-router'
 import {auth, firestore, googleProvider} from './../firebase/index';
 import { connect } from "react-redux";
 import { LogIn } from './../actions/index';
+import resolutions from './../constants/resolutions';
 // # STYLED
 const GoogleSign = styled.input.attrs({
     type: 'submit',
     value: 'Log in with GOOGLE'
 })`
     background: ${colors.positive} !important;
+    width: 100%;
     &:hover {
         box-shadow: 0px 0px 5px 0px ${colors.positive} !important;
     }
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1.1em;
+        padding: 15px;
+    }
 `;
-const GoogleWrapper = styled.div``;
+const GoogleWrapper = styled.div`
+    display: flex;
+`;
 class GoogleLogin extends Component {
     constructor(){
         super();

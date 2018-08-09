@@ -2,17 +2,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from './../constants/colors';
-import {firestore} from './../firebase/index';
 import avatarThumbURL from './../images/avatar-thumb1.1.png';
 import DetailedThread from './DetailedThread';
+import resolutions from './../constants/resolutions';
 // # STYLED
-const Shortcut = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-`;
 const ShortTitle = styled.h2`
     margin: 0px 0px 0px 10px;
     font-size: 0.9em;
@@ -27,27 +20,41 @@ const ShortAuthor = styled.h3`
     margin: 0px;
     font-size: 1em;
     margin-left: 20px;
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1.1em;
+    }
 `;
 const Marked = styled.span`
     color: ${colors.special};
     font-size: 0.8em;
-`;
-const DataShortcut = styled.div`
-    flex: 0 0 70%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    ${Marked} {
-        margin-left: 10px;
+    @media only screen and (max-width: ${resolutions.medium}) {
+        font-size: 1em;
     }
 `;
-const AuthorShortcut = styled.div`
-    flex: 0 0 30%;
+const DataShortcut = styled.div``;
+const AuthorShortcut = styled.div``;
+const DateShortcut = styled.div``;
+const Shortcut = styled.div`
+    width: 100%;
     display: flex;
-    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    ${Marked} {
-        margin-right: 10px;
+    padding: 5px;
+    ${DataShortcut}, ${AuthorShortcut}, ${DateShortcut} {
+        flex: 1 0 ${100/3}%;
+        margin: 6px 0px;
+        @media only screen and (max-width: ${resolutions.medium}) {
+            flex: 1 0 100%;
+        }
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        ${Marked} {
+            margin-right: 10px;
+            margin-left: 10px;
+        }
     }
 `;
 const StyledDetailed = styled(DetailedThread)``;
@@ -64,26 +71,11 @@ export default class Thread extends Component {
     constructor(){
         super()
         this.state = {
-            author: null,
             isDetailed: false
         }
     }
-    componentDidMount(){
-        firestore.collection('users').doc(this.props.userID).get().then((doc) => {
-            this.setState({
-                author: doc.data()
-            })
-        }).catch((error) => {
-            console.log(`# READ AUTHOR ERROR - Code: ${error.code} Message: ${error.message}`);
-        });
-    }
     replaceImage(evt){
         evt.target.src = avatarThumbURL;
-    }
-    getAuthor(fieldname){
-        if(this.state.author != null){
-            return this.state.author[fieldname];
-        }
     }
     showDetailed(){
         this.setState({
@@ -99,9 +91,10 @@ export default class Thread extends Component {
     }
     renderDetailed(){
         if(this.state.isDetailed === true){
-            return <StyledDetailed 
-                avatarURL={this.getAuthor('imageURL')} 
-                author={`${this.getAuthor('firstname')} ${this.getAuthor('surname')}`} 
+            return <StyledDetailed
+                refID={this.props.refID}
+                avatarURL={this.props.authorURL} 
+                author={`${this.props.authorFirstname} ${this.props.authorSurname}`} 
                 title={this.props.title} text={this.props.text} 
                 callbackForThread={this.hideDetailed.bind(this)}
             />;
@@ -120,9 +113,15 @@ export default class Thread extends Component {
                         </DataShortcut>
                         <AuthorShortcut>
                             <Marked>Author: </Marked>
-                            <ShortAvatar src={this.getAuthor('imageURL')} onError={this.replaceImage.bind(this)}/>
-                            <ShortAuthor>{`${this.getAuthor('firstname')} ${this.getAuthor('surname')}`}</ShortAuthor>
+                            <ShortAvatar src={this.props.authorURL} onError={this.replaceImage.bind(this)}/>
+                            <ShortAuthor>{`${this.props.authorFirstname} ${this.props.authorSurname}`}</ShortAuthor>
                         </AuthorShortcut>
+                        <DateShortcut>
+                            <Marked>Created: </Marked>
+                            <ShortTitle>
+                                {this.props.created}
+                            </ShortTitle>
+                        </DateShortcut>
                     </Shortcut>
                 </Real>
                 {this.renderDetailed()}
