@@ -5,6 +5,7 @@ import colors from './../constants/colors';
 import { connect } from "react-redux";
 import ChatMessage from './ChatMessage';
 import AddMessage from './AddMessage';
+import uuidv4 from 'uuid/v4'
 // # STYLED
 const ChatArea = styled.div`
     height: 400px;
@@ -25,10 +26,6 @@ const WrappedChat = styled.div`
 `;
 // # COMPONENT
 class Chat extends Component {
-    constructor() {
-        super();
-        this.counter = 0;
-    }
     render() {
         return(
             <WrappedChat>
@@ -40,7 +37,7 @@ class Chat extends Component {
                             authorURL={item.data().authorURL}
                             authorFirstname={item.data().authorFirstname}
                             authorSurname={item.data().authorSurname}
-                            key={this.counter++}
+                            key={uuidv4()}
                         />
                     })}
                 </ChatArea>

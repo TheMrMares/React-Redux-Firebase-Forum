@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import { connect } from "react-redux";
 import Thread from './Thread';
+import uuidv4 from 'uuid/v4'
 // # STYLED
 const StyledThread = styled(Thread)``;
 const WrappedThreadList = styled.div`
@@ -12,10 +13,6 @@ const WrappedThreadList = styled.div`
 `;
 // # COMPONENT
 class ThreadList extends Component {
-    constructor(){
-        super()
-        this.counter = 0;
-    }
     render(){
         return(
             <WrappedThreadList className={this.props.className}>
@@ -28,7 +25,7 @@ class ThreadList extends Component {
                         authorURL={item.data().authorURL}
                         authorFirstname={item.data().authorFirstname}
                         authorSurname={item.data().authorSurname}
-                        key={this.counter++}
+                        key={uuidv4()}
                     />
                 })}
             </WrappedThreadList>

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import colors from './../constants/colors';
 import {firestore} from './../firebase/index';
 import UserComment from './UserComment';
+import uuidv4 from 'uuid/v4'
 // # STYLED
 const WrappedCommentList = styled.div`
     border-top: 1px solid ${colors.smoothdark};
@@ -16,7 +17,6 @@ export default class CommentList extends Component {
     constructor(){
         super();
         this.sub = null;
-        this.counter = 0;
         this.state = {
             comments: []
         }
@@ -52,7 +52,7 @@ export default class CommentList extends Component {
                         authorURL={item.data().authorURL}
                         authorFirstname={item.data().authorFirstname}
                         authorSurname={item.data().authorSurname} 
-                        key={this.counter++}/>
+                        key={uuidv4()}/>
                 })}
             </WrappedCommentList>
         );
